@@ -49,6 +49,8 @@ plugins/my-plugin/
 │           └── data.md
 ├── commands/               # Optional: user-invoked via /my-plugin:command-name
 │   └── my-command.md
+├── agents/                 # Optional: specialized subagents with isolated context
+│   └── my-agent.md
 └── README.md               # Recommended: plugin documentation
 ```
 
@@ -153,9 +155,72 @@ Parse `$ARGUMENTS` to extract:
 - `$1`, `$2`, ... — Positional arguments
 - `${CLAUDE_PLUGIN_ROOT}` — Absolute path to the plugin directory
 
-### 5. Register in the marketplace
+### 5. Agents (specialized subagents)
 
-Add your plugin entry to `.claude-plugin/marketplace.json` in the `plugins` array:
+Agents are specialized AI assistants that run in their own context window. Claude can delegate tasks to them automatically, or the user can request them explicitly. Create `.md` files inside `agents/`.
+
+**`agents/my-agent.md`:**
+
+```markdown
+---
+name: my-agent
+description: >
+  Describe WHEN Claude should delegate to this agent. Be specific.
+  Example: "Use proactively when the user needs to analyze data,
+  debug queries, or investigate production issues."
+tools: Read, Grep, Glob, Bash
+model: sonnet
+---
+
+You are a specialist in X. When invoked:
+
+1. Understand the task
+2. Gather context by reading relevant files
+3. Perform the analysis
+4. Return a clear summary of findings
+
+Key rules:
+- Always do A before B
+- Use tool X for Y
+- Format output as Z
+```
+
+**Frontmatter fields:**
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `name` | Yes | Unique identifier (lowercase, hyphens) |
+| `description` | Yes | Tells Claude when to delegate. Include "use proactively" for auto-delegation |
+| `tools` | No | Allowed tools (inherits all if omitted). Options: `Read`, `Edit`, `Write`, `Bash`, `Grep`, `Glob`, `Task`, MCP tools |
+| `disallowedTools` | No | Tools to explicitly deny |
+| `model` | No | `sonnet`, `opus`, `haiku`, or `inherit` (default) |
+| `permissionMode` | No | `default`, `acceptEdits`, `dontAsk`, `bypassPermissions`, `plan` |
+| `maxTurns` | No | Max agentic turns before stopping |
+| `skills` | No | Skills to preload into the agent's context |
+| `mcpServers` | No | MCP servers available to this agent |
+| `hooks` | No | Lifecycle hooks scoped to this agent |
+| `memory` | No | Persistent memory scope: `user`, `project`, or `local` |
+
+**Key differences from Skills:**
+
+| | Skills | Agents |
+|---|---|---|
+| **Context** | Runs in the main conversation | Runs in its own isolated context |
+| **Tools** | Uses main conversation tools | Can have restricted/custom tool access |
+| **Model** | Same as main conversation | Can use a different model |
+| **Output** | Inline in conversation | Returns a summary to the main conversation |
+| **Best for** | Domain knowledge, workflows | Isolated tasks, parallel research, restricted operations |
+
+**Tips:**
+- Agents preserve the main conversation's context by running separately
+- Use `tools` to restrict what the agent can do (e.g., read-only agents)
+- Agents **cannot** spawn other agents
+- Use `skills` field to preload domain knowledge into the agent
+- MCP tools are referenced by their full name (e.g., `mcp__metabase__run-native-query`)
+
+### 6. Register in the marketplace
+
+Add your plugin entry to `.claude-plugin/marketplace.json` in the `plugins` array (see step 2 for version format):
 
 ```json
 {
@@ -179,7 +244,7 @@ Add your plugin entry to `.claude-plugin/marketplace.json` in the `plugins` arra
 | `version` | No | Should match `plugin.json`. **Avoid setting it in both places** — `plugin.json` always wins |
 | `category` | No | For organization (e.g., `development`, `analytics`, `devops`) |
 
-### 6. Update the Available Plugins table
+### 7. Update the Available Plugins table
 
 Add a row to the table in this README:
 
@@ -187,7 +252,7 @@ Add a row to the table in this README:
 | [my-plugin](./plugins/my-plugin/) | Short description | 1.0.0 |
 ```
 
-### 7. Commit and push
+### 8. Commit and push
 
 ```bash
 git add -A
