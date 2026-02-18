@@ -1,0 +1,9 @@
+{
+  "name": "loyalty-specialist",
+  "version": "0.1.0",
+  "description": "Generate professional PDF loyalty program performance reports for JeriCommerce clients by querying Metabase and analyzing program data",
+  "author": {
+    "name": "JeriCommerce"
+  },
+  "keywords": ["jericommerce", "loyalty", "report", "metabase", "shopify"]
+}
