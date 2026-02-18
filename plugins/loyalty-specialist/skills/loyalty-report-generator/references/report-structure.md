@@ -2,19 +2,87 @@
 
 ## Output Format
 
-Generate the report as a **PDF file** using the PDF skill (read `/mnt/.skills/skills/pdf/SKILL.md` first).
+Generate the report as a **PDF file** using **ReportLab** with `BaseDocTemplate` and two `PageTemplate`s (cover + content).
 
 File name: `{program_name}_loyalty_report_{YYYY-MM-DD}.pdf`
 
-## Branding
+## Visual Design System
 
-- **Primary purple**: `#7000FF`
-- **Dark**: `#1C1C1C`
-- **Grey**: `#666666`
-- **Light purple**: `#F3EEFF`
-- Clean, professional formatting with clear section headers
-- Data tables with alternating row shading
-- Footer on every page: generation timestamp + "Confidential — Prepared by JeriCommerce"
+### Colors
+
+```python
+PRIMARY    = "#7000FF"   # Main brand purple
+PRIMARY_D  = "#5600CC"   # Darker purple (cover stripe)
+DARK       = "#1C1C1C"   # Body text
+GREY       = "#666666"   # Secondary text
+GREY_L     = "#999999"   # Labels, footer
+LIGHT_P    = "#F3EEFF"   # KPI card backgrounds
+LIGHT_P2   = "#EDE5FF"   # Section separator lines
+BG_LIGHT   = "#FAFAFA"   # Alternating table rows
+BORDER     = "#E5E5E5"   # Table grid lines
+WHITE      = "#FFFFFF"
+```
+
+### Page Templates
+
+**Cover Page** (`onPage` canvas drawing, no platypus content):
+- Full-page `PRIMARY` background fill
+- Darker `PRIMARY_D` stripe at top (120pt)
+- Subtle white semi-transparent horizontal rules above and below center content
+- Program name: Helvetica-Bold 52pt, white, centered
+- Subtitle: Helvetica 18pt, white, centered
+- Date + program details (slug, integration, currency, plan): Helvetica 11–13pt, `#CCBBFF`, centered
+- Footer: Helvetica 8pt, `#AA88FF`, centered — "Confidential -- Prepared by JeriCommerce"
+
+**Content Pages** (`onPage` canvas drawing):
+- Top accent bar: solid `PRIMARY` fill, full width, 8pt height at page top
+- Footer line: 0.5pt `BORDER` colored line at y=28
+- Footer left: generation timestamp + confidentiality (Helvetica 7pt, `GREY_L`)
+- Footer right: "Page N" (page number minus 1, since cover is page 0)
+
+### Typography (ParagraphStyles)
+
+| Style | Size | Font | Color | Usage |
+|-------|------|------|-------|-------|
+| SecTitle | 17pt | Helvetica-Bold | `PRIMARY` | Section headers (spaceBefore=14, spaceAfter=6) |
+| SubTitle | 12pt | Helvetica-Bold | `DARK` | Sub-section headers (spaceBefore=10, spaceAfter=5) |
+| Body | 10pt | Helvetica | `DARK` | Narrative paragraphs (leading=15) |
+| KPIVal | 20pt | Helvetica-Bold | `PRIMARY` | KPI card value (centered) |
+| KPILbl | 8pt | Helvetica | `GREY_L` | KPI card label (centered) |
+| TH | 8.5pt | Helvetica-Bold | `WHITE` | Table header cells |
+| TD | 8.5pt | Helvetica | `DARK` | Table body cells |
+| CatTitle | 11pt | Helvetica-Bold | `PRIMARY` | Recommendation category headers |
+| BulletItem | 9.5pt | Helvetica | `DARK` | Recommendation bullets (leftIndent=14, leading=14) |
+
+### Components
+
+**KPI Cards** — Table with single column, `LIGHT_P` background, 8px rounded corners:
+- Top cell: value in `KPIVal` style (topPadding=12)
+- Spacer cell: 2pt
+- Bottom cell: label in `KPILbl` style (bottomPadding=10)
+
+**KPI Strips** — Horizontal Table of N KPI cards, equal column widths (`CONTENT_W / N`), center-aligned. Use 3–4 cards per strip, stack multiple strips with 8pt spacing.
+
+**Data Tables** — `PRIMARY` header row background with white text. Body rows alternate `WHITE` / `BG_LIGHT`. Grid: 0.4pt `BORDER`. Cell padding: 7pt header, 5pt body, 8pt left/right. `repeatRows=1`.
+
+**Section Separators** — 1.2pt `LIGHT_P2` colored line below each section title, implemented as a single-cell table with `LINEABOVE`.
+
+**Recommendation Bullets** — Use `&#8226;&nbsp;` HTML entity prefix, bold the first sentence as the action title, followed by explanation text.
+
+### Layout
+
+- Page size: A4
+- Margins: 22mm all sides
+- Content width: `PAGE_W - 2 * MARGIN` (~454pt)
+- Each major section starts on a new page (`PageBreak`)
+- Section pattern: Title → Separator → Spacer(6) → KPI strip(s) → Subtitle → Table → Narrative paragraph
+
+### Number Formatting
+
+Use **European format** throughout the report:
+- Dots for thousands separator: `1.633.928`
+- Commas for decimals: `95,89`
+- Currency: `1.633.928,00 EUR`
 
 ## Writing Style & Readability
 
@@ -30,65 +98,67 @@ File name: `{program_name}_loyalty_report_{YYYY-MM-DD}.pdf`
 ## Report Sections
 
 ### Cover Page
-- JeriCommerce logo area (purple `#7000FF` branding)
-- Program name (large)
+- Full-page `PRIMARY` background with `PRIMARY_D` stripe
+- Program name (large, white, centered)
 - "Loyalty Program Performance Report"
-- Report date range and generation date
+- Program details: slug, integration, currency, plan
+- Report date and generation date
 - Confidential notice
 
 ### Executive Summary (1 page)
-- 4–6 key KPIs in large format: Total Members, Active Passes, Install Rate, Total Revenue, Avg Order Value, Churn Rate
+- 4–8 KPI cards in strips of 4: Total Members, Active Passes, Install Rate, Total Revenue, Avg Order Value, Churn Rate (optionally: Orders 30d, Revenue 30d)
 - 2–3 sentence narrative summary of program health
 
 ### 1. Membership & Growth
 - Total customers and growth trajectory
-- New member acquisition trend (monthly chart data as table)
-- Customer origin breakdown (SHOPIFY vs JERICOMMERCE vs INITIAL_SYNC)
+- New member acquisition trend (monthly table)
+- Customer origin breakdown table (SHOPIFY vs JERICOMMERCE vs INITIAL_SYNC)
 - Pass installation rate and Apple vs Google split
 
 ### 2. Pass Engagement
-- Installation trend over time
-- Churn rate analysis (uninstalled / total created)
-- Platform distribution (iOS vs Android)
+- KPI strip: total passes, installed, uninstalled, churn rate
+- Platform split table (Apple vs Google)
+- Installation trend table (monthly)
 - Active pass penetration (active passes / total customers)
 
 ### 3. Loyalty Economics
-- Points balance distribution
-- Tier breakdown with member counts
-- Average balance and spending power analysis
+- KPI strip: avg balance, median balance, max balance
+- Points balance distribution table
+- Tier breakdown table with member counts
 - Tier progression recommendations
 
 ### 4. Revenue Impact
 - Total attributed revenue
-- Monthly revenue trend
+- Monthly revenue trend table
 - Average order value
 - Revenue per loyalty member
 - Transactions in last 30 days vs prior period
 
 ### 5. Engagement Flows
-- Active earning flows and their configuration
-- Execution counts per flow
-- Top-performing flows by unique customer engagement
+- Full table: flow name, active status, rates, points, total executions, unique customers, last 30d
 - Inactive flows that could be activated
 
 ### 6. Rewards & Redemption
-- Reward catalog overview
-- Redemption funnel (issued → claimed → used)
+- Reward catalog table
+- Redemption funnel KPI strip (issued → claimed → used → conversion rate)
 - Claim rate and usage rate per reward
 - Recommendations on reward optimization
 
 ### 7. Push Campaigns
-- Recent campaigns with CTR
+- Recent campaigns table with audience, clicks, CTR
 - Top-performing campaigns
 - Average CTR benchmark
 - Campaign frequency analysis
 
 ### 8. Web App Usage
-- Top visited sections
-- Device/OS breakdown
-- Referral program adoption
+- Top visited pages table
+- Device/OS breakdown table
+- Referral program adoption status
 
-### 9. Insights & Recommendations
+### 9. Event Activity (Last 90 Days)
+- Full event summary table: type, total events, unique customers, last occurrence
+
+### 10. Insights & Recommendations
 
 Provide **5–8 actionable recommendations** grouped by priority:
 

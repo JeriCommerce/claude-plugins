@@ -87,6 +87,8 @@ If ambiguous, ask the user to confirm which program.
 - **Engagement flows**: INCENTIVIZE_PURCHASES, INSTALL_WALLET_PASS, MEMBER_GET_MEMBER, FOLLOW_US, COMPLETE_USER_PROFILE, CUSTOMER_SCANNED, VERIFY_ACCOUNT, WALLET_LINK_CLICK
 - **Transactions amount**: stored in cents, always divide by 100
 - **Coupon batches**: `discount_type` is 'fixed' (value in whole currency) or 'percentage' (value is percentage number)
+- **Transaction status**: filter by `status IN ('completed', 'processed')` — both represent successful transactions
+- **Number formatting**: use European format — dots for thousands (`1.633.928`), commas for decimals (`95,89 EUR`)
 - If a query returns empty results, note it in the report as "No data available" — do NOT skip the section
 - If the program has an `integration` field set (e.g. LoyaltyLion), note that loyalty data may be managed externally
 

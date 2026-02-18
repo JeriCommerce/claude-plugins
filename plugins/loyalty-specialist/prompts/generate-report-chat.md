@@ -129,7 +129,7 @@ SELECT
 FROM transactions t
 JOIN customers c ON t.customer_id = c.id
 WHERE c.program_id = '{program_id}'::uuid
-  AND t.status = 'completed'
+  AND t.status IN ('completed', 'processed')
 ```
 
 ### 2.9 Monthly Revenue Trend
@@ -142,7 +142,7 @@ SELECT
 FROM transactions t
 JOIN customers c ON t.customer_id = c.id
 WHERE c.program_id = '{program_id}'::uuid
-  AND t.status = 'completed'
+  AND t.status IN ('completed', 'processed')
 GROUP BY 1 ORDER BY 1
 ```
 
@@ -249,19 +249,22 @@ WHERE c.program_id = '{program_id}'::uuid
 
 ## Step 3: Analyze and generate report
 
-After collecting ALL data, generate a professional PDF report with these sections:
+After collecting ALL data, generate a professional PDF report using **ReportLab** with `BaseDocTemplate` and two `PageTemplate`s (cover + content).
 
-1. **Cover Page** — Program name, "Loyalty Program Performance Report", date, "Confidential — Prepared by JeriCommerce"
-2. **Executive Summary** — 4–6 key KPIs (Total Members, Active Passes, Install Rate, Total Revenue, Avg Order Value, Churn Rate) + 2–3 sentence narrative
-3. **Membership & Growth** — Total customers, acquisition trend, origin breakdown, pass install rate
-4. **Pass Engagement** — Installation trend, churn rate, Apple vs Google split
-5. **Loyalty Economics** — Points balance distribution, tier breakdown
-6. **Revenue Impact** — Total revenue, monthly trend, AOV, revenue per member
-7. **Engagement Flows** — Active flows, execution counts, top performers
-8. **Rewards & Redemption** — Catalog overview, redemption funnel (issued → claimed → used)
-9. **Push Campaigns** — Recent campaigns with CTR, top performers
-10. **Web App Usage** — Top pages, device breakdown, referral adoption
-11. **Insights & Recommendations** — 5–8 actionable recommendations grouped by: Quick Wins, Strategic, Watch
+### Report sections
+
+1. **Cover Page** — Full-page purple (`#7000FF`) background, `#5600CC` stripe at top, program name (52pt white), subtitle, date, program details (slug, integration, currency, plan)
+2. **Executive Summary** — 4–8 KPI cards in strips of 4 (Total Members, Active Passes, Install Rate, Total Revenue, AOV, Churn Rate, optionally Orders 30d, Revenue 30d) + 2–3 sentence narrative
+3. **Membership & Growth** — Total customers, acquisition trend table, origin breakdown table, pass install rate
+4. **Pass Engagement** — KPI strip, platform split table, installation trend table, churn rate
+5. **Loyalty Economics** — KPI strip (avg/median/max balance), points distribution table, tier breakdown table
+6. **Revenue Impact** — Total revenue, monthly trend table, AOV, revenue per member
+7. **Engagement Flows** — Full table: flow name, active status, rates, points, executions, unique customers, last 30d
+8. **Rewards & Redemption** — Catalog table, redemption funnel KPI strip (issued → claimed → used → conversion rate)
+9. **Push Campaigns** — Recent campaigns table with audience, clicks, CTR
+10. **Web App Usage** — Top pages table, device breakdown table, referral adoption
+11. **Event Activity** — Full event summary table (last 90 days)
+12. **Insights & Recommendations** — 5–8 actionable recommendations grouped by: Quick Wins, Strategic, Watch
 
 ### Recommendation heuristics
 
@@ -276,10 +279,28 @@ After collecting ALL data, generate a professional PDF report with these section
 | No recent campaigns | Encourage regular push cadence (2–4/month) |
 | Avg balance high but low redemptions | Rewards may be too expensive or not compelling |
 
-### Branding
+### Visual design
 
-- Primary purple: `#7000FF` | Dark: `#1C1C1C` | Grey: `#666666` | Light purple: `#F3EEFF`
-- Footer on every page: generation timestamp + "Confidential — Prepared by JeriCommerce"
+#### Colors
+- `#7000FF` primary | `#5600CC` cover stripe | `#1C1C1C` body text | `#666666` secondary
+- `#999999` labels/footer | `#F3EEFF` KPI backgrounds | `#EDE5FF` separator lines
+- `#FAFAFA` alternating rows | `#E5E5E5` table grid | `#FFFFFF` white
+
+#### Components
+- **KPI Cards**: `#F3EEFF` background, value 20pt bold purple, label 8pt grey, rounded corners
+- **KPI Strips**: horizontal row of 3–4 cards, equal widths, stack multiple strips with 8pt spacing
+- **Data Tables**: purple header with white text, alternating white/`#FAFAFA` rows, 0.4pt grid
+- **Section Separators**: 1.2pt `#EDE5FF` line below each section title
+- **Recommendation Bullets**: bullet prefix, bold first sentence as action title
+
+#### Layout
+- Page size: A4, margins: 22mm all sides
+- Each major section starts on a new page (`PageBreak`)
+- Content pages: 8pt purple accent bar at top, footer with timestamp + page number
+- Section pattern: Title → Separator → Spacer → KPI strip(s) → Subtitle → Table → Narrative
+
+#### Number formatting
+- European format: dots for thousands (`1.633.928`), commas for decimals (`95,89 EUR`)
 
 ### Writing style
 
@@ -309,5 +330,6 @@ Consider these when analyzing results — mention them in the report when they i
 - **Campaign type**: 0 = push, 1 = location, 2 = card update, 3 = anonymous, 4 = proximity
 - **Customer origin**: SHOPIFY, JERICOMMERCE, INITIAL_SYNC, UNKNOWN
 - **Coupon batches**: `discount_type` is 'fixed' (value in whole currency) or 'percentage'
+- **Transaction status**: filter by `status IN ('completed', 'processed')` — both are successful transactions
 
 Save as `{program_name}_loyalty_report_{YYYY-MM-DD}.pdf`.

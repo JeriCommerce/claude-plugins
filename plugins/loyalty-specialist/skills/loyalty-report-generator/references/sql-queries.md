@@ -124,7 +124,7 @@ SELECT
 FROM transactions t
 JOIN customers c ON t.customer_id = c.id
 WHERE c.program_id = '{program_id}'::uuid
-  AND t.status = 'completed'
+  AND t.status IN ('completed', 'processed')
 ```
 
 ## Step 10: Monthly Revenue Trend
@@ -138,7 +138,7 @@ SELECT
 FROM transactions t
 JOIN customers c ON t.customer_id = c.id
 WHERE c.program_id = '{program_id}'::uuid
-  AND t.status = 'completed'
+  AND t.status IN ('completed', 'processed')
 GROUP BY 1 ORDER BY 1
 ```
 
