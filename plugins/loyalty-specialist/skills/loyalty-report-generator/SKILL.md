@@ -6,7 +6,7 @@ description: >
   performance report", or provides a program UUID, slug, or name expecting
   a JeriCommerce loyalty program analysis. Covers the full data collection,
   analysis, and PDF report generation workflow.
-version: 202602.18.1
+version: 202602.18.2
 ---
 
 # JeriCommerce Loyalty Report Generator
@@ -63,6 +63,16 @@ The user provides one of:
 
 If ambiguous, ask the user to confirm which program.
 
+## Integration Data Model
+
+Understanding how integrations work is critical for the integration detection step:
+
+- **`integrations`** — Catalog of available integration providers (e.g., `jericommerce`, `shopify`, `shopify/loyalty-lion`, `convercus`)
+- **`features`** — Catalog of capabilities (e.g., `loyalty`, `rewards`, `users`, `segments`). Features with `multi = false` can only be provided by ONE integration per program
+- **`program_integrations`** — Links a program to its active integrations, with an `enabled_features` UUID array indicating which features each integration provides for that program
+
+To determine if JeriCommerce manages loyalty for a program: check if there's a `program_integrations` record where the integration is `jericommerce` AND the `enabled_features` array contains the ID of the `loyalty` feature (resolved dynamically from the `features` table).
+
 ## Database Details
 
 - **Metabase database_id: 3** (`jericommerce-db`, PostgreSQL 17.7, timezone `Europe/Madrid`)
@@ -74,9 +84,11 @@ If ambiguous, ask the user to confirm which program.
 
 1. **Identify the program** — Use `Metabase:execute` with `database_id: 3` and the Step 1 query from `references/sql-queries.md` to get the program UUID and details.
 
-2. **Detect integration provider** — Run the Step 1.5 query from `references/sql-queries.md` to determine `has_jc_loyalty`, `has_jc_rewards`, and `active_integrations`. This decides which queries and report sections to include.
+2. **Resolve feature IDs** — Run the Step 1.5 query from `references/sql-queries.md` to get the UUIDs for `loyalty` and `rewards` features. Store as `{loyalty_feature_id}` and `{rewards_feature_id}`. Never hardcode feature UUIDs — they may vary across environments.
 
-3. **Collect data (conditional)** — Execute queries from `references/sql-queries.md` via `Metabase:execute` (database_id: 3). Use this decision tree:
+3. **Detect integration provider** — Run the Step 1.6 query from `references/sql-queries.md` using the resolved feature IDs to determine `has_jc_loyalty`, `has_jc_rewards`, and `active_integrations`. This decides which queries and report sections to include.
+
+4. **Collect data (conditional)** — Execute queries from `references/sql-queries.md` via `Metabase:execute` (database_id: 3). Use this decision tree:
 
    **Always run:** Steps 2–6, 13–16 (subscription, membership, passes, origin, campaigns, events, web visits, referrals)
 
@@ -91,11 +103,11 @@ If ambiguous, ask the user to confirm which program.
 
    Run ALL applicable queries before generating the report. Do NOT generate partial reports.
 
-4. **Analyze data** — Apply the heuristics from `references/report-structure.md` (use the appropriate heuristic set based on `has_jc_loyalty`). Generate actionable recommendations.
+5. **Analyze data** — Apply the heuristics from `references/report-structure.md` (use the appropriate heuristic set based on `has_jc_loyalty`). Generate actionable recommendations.
 
-5. **Generate PDF** — Read the PDF skill (`/mnt/.skills/skills/pdf/SKILL.md`) and create the report following the structure and branding in `references/report-structure.md`. Use the full or reduced report structure based on integration detection.
+6. **Generate PDF** — Read the PDF skill (`/mnt/.skills/skills/pdf/SKILL.md`) and create the report following the structure and branding in `references/report-structure.md`. Use the full or reduced report structure based on integration detection.
 
-6. **File naming** — Save as `{program_name}_loyalty_report_{YYYY-MM-DD}.pdf`
+7. **File naming** — Save as `{program_name}_loyalty_report_{YYYY-MM-DD}.pdf`
 
 ## Key Data Notes
 

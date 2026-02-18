@@ -26,17 +26,30 @@ FROM programs
 WHERE slug = '{PROGRAM}'
 ```
 
-## Step 1.5: Detect integration provider
+## Step 1.5: Resolve feature IDs
 
-Run this query to determine if the program uses JeriCommerce's loyalty engine or an external provider:
+Feature UUIDs may vary across environments. Always resolve them dynamically:
+
+```sql
+SELECT id, name FROM features WHERE name IN ('loyalty', 'rewards')
+```
+
+Store results as `{loyalty_feature_id}` and `{rewards_feature_id}`.
+
+**Data model context:**
+- `integrations` — catalog of providers (e.g., `jericommerce`, `shopify`, `shopify/loyalty-lion`, `convercus`)
+- `features` — catalog of capabilities (`loyalty`, `rewards`, `users`, `segments`). Features with `multi = false` can only be provided by ONE integration per program
+- `program_integrations` — links a program to its integrations, with `enabled_features` UUID array
+
+## Step 1.6: Detect integration provider
 
 ```sql
 SELECT
   BOOL_OR(i.name = 'jericommerce'
-    AND '83ad8899-34f7-42fc-ba70-0aa26fdb8b9e' = ANY(pi.enabled_features)
+    AND '{loyalty_feature_id}' = ANY(pi.enabled_features)
   ) AS has_jc_loyalty,
   BOOL_OR(i.name = 'jericommerce'
-    AND '1f595d92-9e08-49e4-9115-600acac6b53c' = ANY(pi.enabled_features)
+    AND '{rewards_feature_id}' = ANY(pi.enabled_features)
   ) AS has_jc_rewards,
   ARRAY_AGG(DISTINCT i.name) AS active_integrations
 FROM program_integrations pi

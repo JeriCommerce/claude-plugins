@@ -1,6 +1,6 @@
 {
   "name": "loyalty-specialist",
-  "version": "202602.18.1",
+  "version": "202602.18.2",
   "description": "Generate professional PDF loyalty program performance reports for JeriCommerce clients by querying Metabase and analyzing program data",
   "author": {
     "name": "JeriCommerce"
