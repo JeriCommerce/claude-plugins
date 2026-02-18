@@ -113,7 +113,9 @@ To determine if JeriCommerce manages loyalty for a program: check if there's a `
 
 - **Pass status enums**: 0 = created/pending, 1 = installed/active, 2 = uninstalled
 - **Pass type enums**: 0 = Apple Wallet, 1 = Google Wallet
-- **Campaign type enums**: 0 = push notification, 1 = location, 2 = card update, 3 = anonymous campaign, 4 = proximity
+- **Campaign type enums** (`campaigns.type` — `CampaignTypeEnum`): 0 = Location, 1 = Scheduled, 2 = Links, 3 = Triggered, 4 = Anonymous
+- **Notification type enums** (`notifications.type` — `NotificationTypeEnum`): 0 = BalanceChanged, 1 = TierStatusChanged, 2 = Marketing, 3 = RewardAvailable
+- **Location campaigns (type 0)** do not support CTR tracking — exclude them from CTR analysis
 - **Customer origin enums**: SHOPIFY, JERICOMMERCE, INITIAL_SYNC, UNKNOWN
 - **Engagement flows**: INCENTIVIZE_PURCHASES, INSTALL_WALLET_PASS, MEMBER_GET_MEMBER, FOLLOW_US, COMPLETE_USER_PROFILE, CUSTOMER_SCANNED, VERIFY_ACCOUNT, WALLET_LINK_CLICK
 - **Transactions amount**: stored in cents, always divide by 100
