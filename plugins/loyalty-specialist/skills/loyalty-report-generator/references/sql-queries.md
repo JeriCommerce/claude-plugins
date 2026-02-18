@@ -229,6 +229,7 @@ LEFT JOIN clicks cl ON cl.campaign_id = camp.id
 WHERE camp.program_id = '{program_id}'::uuid
   AND camp.deleted_at IS NULL
   AND camp.started_at IS NOT NULL
+  AND camp.type != '0'  -- Exclude Location campaigns (no CTR support)
 GROUP BY camp.id, camp.name, camp.type, camp.started_at, camp.finished_at
 ORDER BY camp.started_at DESC
 LIMIT 20

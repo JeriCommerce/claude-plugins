@@ -234,7 +234,7 @@ Provide **5–8 actionable recommendations** grouped by priority:
 | Pass install rate < 30% of customers | Improve distribution (email flows, QR in store) |
 | Churn rate > 20% | Launch reactivation campaigns |
 | Zero balance > 50% of members | Earning flows may not be active or visible enough |
-| CTR < 5% on campaigns | Review notification copy and timing |
+| CTR < 5% on Scheduled/Links campaigns | Review notification copy, timing, and ensure all campaigns include a trackable CTA link |
 | Low referral adoption | Promote referral link visibility |
 | Only 1 tier | Suggest implementing tier system for gamification |
 | No recent campaigns | Encourage regular push cadence (2–4/month) |
@@ -293,7 +293,7 @@ When `has_jc_loyalty = false`, only evaluate these metrics:
 | Pass install rate < 30% | Improve distribution |
 | Churn > 20% | Investigate pass value proposition |
 | No recent campaigns | Encourage push cadence |
-| CTR < 5% | Review copy, timing, segmentation |
+| CTR < 5% on Scheduled/Links campaigns | Review notification copy, timing, and ensure all campaigns include a trackable CTA link |
 | Campaign audiences < 100 | Focus on growing pass adoption first |
 | Web app visits < 500 (90d) | Drive traffic via wallet pass and emails |
 | Rewards page < 10% of total visits | Improve discoverability |

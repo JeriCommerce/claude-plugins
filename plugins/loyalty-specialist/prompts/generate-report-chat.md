@@ -233,6 +233,7 @@ LEFT JOIN campaign_customers cc ON cc.campaign_id = camp.id
 LEFT JOIN clicks cl ON cl.campaign_id = camp.id
 WHERE camp.program_id = '{program_id}'::uuid
   AND camp.deleted_at IS NULL AND camp.started_at IS NOT NULL
+  AND camp.type != '0'  -- Exclude Location campaigns (no CTR support)
 GROUP BY camp.id, camp.name, camp.type, camp.started_at, camp.finished_at
 ORDER BY camp.started_at DESC LIMIT 20
 ```
@@ -349,7 +350,7 @@ Add a note in Executive Summary: "Loyalty data (points, tiers, transactions, red
 | Pass install rate < 30% of customers | Improve distribution (email flows, QR in store) |
 | Churn rate > 20% | Launch reactivation campaigns |
 | Zero balance > 50% of members | Earning flows may not be active or visible enough |
-| CTR < 5% on campaigns | Review notification copy and timing |
+| CTR < 5% on Scheduled/Links campaigns | Review notification copy, timing, and ensure all campaigns include a trackable CTA link |
 | Low referral adoption | Promote referral link visibility |
 | Only 1 tier | Suggest implementing tier system for gamification |
 | No recent campaigns | Encourage regular push cadence (2–4/month) |
@@ -366,7 +367,7 @@ Add a note in Executive Summary: "Loyalty data (points, tiers, transactions, red
 | Pass install rate < 30% | Improve distribution |
 | Churn > 20% | Investigate pass value proposition |
 | No recent campaigns | Encourage push cadence |
-| CTR < 5% | Review copy, timing, segmentation |
+| CTR < 5% on Scheduled/Links campaigns | Review notification copy, timing, and ensure all campaigns include a trackable CTA link |
 | Campaign audiences < 100 | Focus on growing pass adoption first |
 | Web app visits < 500 (90d) | Drive traffic via wallet pass and emails |
 | Rewards page < 10% of total visits | Improve discoverability |
@@ -434,7 +435,9 @@ Consider these when analyzing results — mention them in the report when they i
 - **Soft deletes**: `deleted_at` column on `campaigns`, `coupons`, `rewards` (NOT on `programs`, `customers`, `passes`)
 - **Pass status**: 0 = pending, 1 = installed/active, 2 = uninstalled
 - **Pass type**: 0 = Apple Wallet, 1 = Google Wallet
-- **Campaign type**: 0 = push, 1 = location, 2 = card update, 3 = anonymous, 4 = proximity
+- **Campaign type** (`campaigns.type` — `CampaignTypeEnum`): 0 = Location, 1 = Scheduled, 2 = Links, 3 = Triggered, 4 = Anonymous
+- **Notification type** (`notifications.type` — `NotificationTypeEnum`): 0 = BalanceChanged, 1 = TierStatusChanged, 2 = Marketing, 3 = RewardAvailable
+- **Location campaigns (type 0)** do not support CTR tracking — exclude them from CTR analysis
 - **Customer origin**: SHOPIFY, JERICOMMERCE, INITIAL_SYNC, UNKNOWN
 - **Coupon batches**: `discount_type` is 'fixed' (value in whole currency) or 'percentage'
 - **Transaction status**: filter by `status IN ('completed', 'processed')` — both are successful transactions
