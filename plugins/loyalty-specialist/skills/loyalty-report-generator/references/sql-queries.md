@@ -15,6 +15,38 @@ WHERE id = '{program_id}'::uuid
 -- OR: WHERE lower(name) ILIKE '%{name}%'
 ```
 
+## Step 1.5: Integration Detection
+
+Detect whether the program uses JeriCommerce's own loyalty engine or an external provider.
+
+```sql
+SELECT
+  BOOL_OR(i.name = 'jericommerce'
+    AND '83ad8899-34f7-42fc-ba70-0aa26fdb8b9e' = ANY(pi.enabled_features)
+  ) AS has_jc_loyalty,
+  BOOL_OR(i.name = 'jericommerce'
+    AND '1f595d92-9e08-49e4-9115-600acac6b53c' = ANY(pi.enabled_features)
+  ) AS has_jc_rewards,
+  ARRAY_AGG(DISTINCT i.name) AS active_integrations
+FROM program_integrations pi
+JOIN integrations i ON pi.integration_id = i.id
+WHERE pi.program_id = '{program_id}'::uuid
+```
+
+### Feature UUID Reference
+
+| Feature | UUID | `multi` |
+|---------|------|---------|
+| loyalty | `83ad8899-34f7-42fc-ba70-0aa26fdb8b9e` | false |
+| rewards | `1f595d92-9e08-49e4-9115-600acac6b53c` | false |
+| users | `d2b5ca91-6809-4d08-817c-36ca521e6201` | false |
+| segments | `35129d99-0ccc-41c4-b762-4df44b6187f5` | true |
+| events | `cf2f2625-2053-4a08-a6f1-a55cb1cd0273` | true |
+| multi-pass | `c3ff3cce-064f-4f8e-9d78-a2dc5675b221` | true |
+| download-wallet-pass-url | `202b0618-c67a-4242-b936-1f5b98b7a3dc` | true |
+| devices | `5ebfa5a2-d4a9-4e4e-85bd-78a6c211bd4b` | true |
+| custom-fields | `ac3be53f-86ff-4863-a184-c5bdb360fe6f` | true |
+
 ## Step 2: Subscription Status
 
 ```sql
@@ -77,7 +109,7 @@ WHERE program_id = '{program_id}'::uuid
 GROUP BY origin ORDER BY count DESC
 ```
 
-## Step 7: Loyalty Balances Distribution
+## Step 7: Loyalty Balances Distribution ⚠️ Only if `has_jc_loyalty = true`
 
 ```sql
 SELECT
@@ -95,7 +127,7 @@ JOIN customers c ON cld.customer_id = c.id
 WHERE c.program_id = '{program_id}'::uuid
 ```
 
-## Step 8: Tier Distribution
+## Step 8: Tier Distribution ⚠️ Only if `has_jc_loyalty = true`
 
 ```sql
 SELECT
@@ -110,7 +142,7 @@ GROUP BY t.id, t.name, t.required_points, t.factor
 ORDER BY t.required_points ASC
 ```
 
-## Step 9: Revenue & Transactions
+## Step 9: Revenue & Transactions ⚠️ Only if `has_jc_loyalty = true`
 
 ```sql
 SELECT
@@ -127,7 +159,7 @@ WHERE c.program_id = '{program_id}'::uuid
   AND t.status IN ('completed', 'processed')
 ```
 
-## Step 10: Monthly Revenue Trend
+## Step 10: Monthly Revenue Trend ⚠️ Only if `has_jc_loyalty = true`
 
 ```sql
 SELECT
@@ -142,7 +174,7 @@ WHERE c.program_id = '{program_id}'::uuid
 GROUP BY 1 ORDER BY 1
 ```
 
-## Step 11: Engagement Flows Performance
+## Step 11: Engagement Flows Performance ⚠️ Only if `has_jc_loyalty = true`
 
 ```sql
 SELECT
@@ -161,7 +193,7 @@ GROUP BY ef.name, pef.active, pef.properties->>'creditRate', pef.properties->>'p
 ORDER BY total_executions DESC
 ```
 
-## Step 12: Rewards Catalog & Redemption
+## Step 12: Rewards Catalog & Redemption ⚠️ Only if `has_jc_rewards = true`
 
 ```sql
 SELECT

@@ -26,9 +26,36 @@ FROM programs
 WHERE slug = '{PROGRAM}'
 ```
 
-## Step 2: Collect all data
+## Step 1.5: Detect integration provider
 
-Once you have the program UUID, execute ALL of the following queries in order using `Metabase:execute` with `database_id: 3`. Collect ALL results before generating the report.
+Run this query to determine if the program uses JeriCommerce's loyalty engine or an external provider:
+
+```sql
+SELECT
+  BOOL_OR(i.name = 'jericommerce'
+    AND '83ad8899-34f7-42fc-ba70-0aa26fdb8b9e' = ANY(pi.enabled_features)
+  ) AS has_jc_loyalty,
+  BOOL_OR(i.name = 'jericommerce'
+    AND '1f595d92-9e08-49e4-9115-600acac6b53c' = ANY(pi.enabled_features)
+  ) AS has_jc_rewards,
+  ARRAY_AGG(DISTINCT i.name) AS active_integrations
+FROM program_integrations pi
+JOIN integrations i ON pi.integration_id = i.id
+WHERE pi.program_id = '{program_id}'::uuid
+```
+
+**This determines which queries and report sections to include:**
+
+| Condition | Skip sections | Skip queries |
+|-----------|---------------|--------------|
+| `has_jc_loyalty = false` | Loyalty Economics, Revenue Impact, Engagement Flows | 2.6–2.10 |
+| `has_jc_rewards = false` | Rewards & Redemption | 2.11 |
+
+## Step 2: Collect data
+
+Once you have the program UUID and integration flags, execute the applicable queries using `Metabase:execute` with `database_id: 3`. Collect ALL applicable results before generating the report.
+
+**Always run:** 2.1–2.5, 2.12–2.16. **Only if `has_jc_loyalty = true`:** 2.6–2.10. **Only if `has_jc_rewards = true`:** 2.11.
 
 ### 2.1 Subscription Status
 ```sql
@@ -87,7 +114,7 @@ WHERE program_id = '{program_id}'::uuid
 GROUP BY origin ORDER BY count DESC
 ```
 
-### 2.6 Loyalty Balances Distribution
+### 2.6 Loyalty Balances Distribution ⚠️ Only if `has_jc_loyalty = true`
 ```sql
 SELECT
   COUNT(*) AS total_members,
@@ -104,7 +131,7 @@ JOIN customers c ON cld.customer_id = c.id
 WHERE c.program_id = '{program_id}'::uuid
 ```
 
-### 2.7 Tier Distribution
+### 2.7 Tier Distribution ⚠️ Only if `has_jc_loyalty = true`
 ```sql
 SELECT
   t.name AS tier_name, t.required_points, t.factor,
@@ -116,7 +143,7 @@ GROUP BY t.id, t.name, t.required_points, t.factor
 ORDER BY t.required_points ASC
 ```
 
-### 2.8 Revenue & Transactions
+### 2.8 Revenue & Transactions ⚠️ Only if `has_jc_loyalty = true`
 ```sql
 SELECT
   COUNT(*) AS total_transactions,
@@ -132,7 +159,7 @@ WHERE c.program_id = '{program_id}'::uuid
   AND t.status IN ('completed', 'processed')
 ```
 
-### 2.9 Monthly Revenue Trend
+### 2.9 Monthly Revenue Trend ⚠️ Only if `has_jc_loyalty = true`
 ```sql
 SELECT
   DATE_TRUNC('month', t.created_at) AS month,
@@ -146,7 +173,7 @@ WHERE c.program_id = '{program_id}'::uuid
 GROUP BY 1 ORDER BY 1
 ```
 
-### 2.10 Engagement Flows Performance
+### 2.10 Engagement Flows Performance ⚠️ Only if `has_jc_loyalty = true`
 ```sql
 SELECT
   ef.name AS flow_name, pef.active,
@@ -163,7 +190,7 @@ GROUP BY ef.name, pef.active, pef.properties->>'creditRate', pef.properties->>'p
 ORDER BY total_executions DESC
 ```
 
-### 2.11 Rewards Catalog & Redemption
+### 2.11 Rewards Catalog & Redemption ⚠️ Only if `has_jc_rewards = true`
 ```sql
 SELECT
   r.title, r.redeem_cost, cb.discount_type,
@@ -251,22 +278,58 @@ WHERE c.program_id = '{program_id}'::uuid
 
 After collecting ALL data, generate a professional PDF report using **ReportLab** with `BaseDocTemplate` and two `PageTemplate`s (cover + content).
 
-### Report sections
+Choose the report structure based on the integration detection from Step 1.5.
 
-1. **Cover Page** — Full-page purple (`#7000FF`) background, `#5600CC` stripe at top, program name (52pt white), subtitle, date, program details (slug, integration, currency, plan)
-2. **Executive Summary** — 4–8 KPI cards in strips of 4 (Total Members, Active Passes, Install Rate, Total Revenue, AOV, Churn Rate, optionally Orders 30d, Revenue 30d) + 2–3 sentence narrative
-3. **Membership & Growth** — Total customers, acquisition trend table, origin breakdown table, pass install rate
-4. **Pass Engagement** — KPI strip, platform split table, installation trend table, churn rate
-5. **Loyalty Economics** — KPI strip (avg/median/max balance), points distribution table, tier breakdown table
-6. **Revenue Impact** — Total revenue, monthly trend table, AOV, revenue per member
-7. **Engagement Flows** — Full table: flow name, active status, rates, points, executions, unique customers, last 30d
-8. **Rewards & Redemption** — Catalog table, redemption funnel KPI strip (issued → claimed → used → conversion rate)
-9. **Push Campaigns** — Recent campaigns table with audience, clicks, CTR
-10. **Web App Usage** — Top pages table, device breakdown table, referral adoption
-11. **Event Activity** — Full event summary table (last 90 days)
-12. **Insights & Recommendations** — 5–8 actionable recommendations grouped by: Quick Wins, Strategic, Watch
+### Full report (`has_jc_loyalty = true`)
 
-### Recommendation heuristics
+1. **Cover Page** — Full-page purple (`#7000FF`) background, `#5600CC` stripe at top, program name (52pt white), subtitle, date, program details
+2. **Executive Summary** — 4–8 KPI cards (Total Members, Active Passes, Install Rate, Total Revenue, AOV, Churn Rate, optionally Orders 30d, Revenue 30d) + narrative
+3. **Membership & Growth** — Customers, acquisition trend, origin breakdown, pass install rate
+4. **Pass Engagement** — KPI strip, platform split, installation trend, churn rate
+5. **Loyalty Economics** — Balance KPIs, distribution table, tier breakdown
+6. **Revenue Impact** — Revenue, monthly trend, AOV, revenue per member
+7. **Engagement Flows** — Full table with active status, rates, executions
+8. **Rewards & Redemption** (only if `has_jc_rewards = true`) — Catalog, redemption funnel
+9. **Push Campaigns** — Campaigns table with audience, clicks, CTR
+10. **Web App Usage** — Pages, devices, referral adoption
+11. **Event Activity** — Event summary table (last 90 days)
+12. **What's Working Well** (only if ≥ 2 thresholds met — see below)
+13. **Insights & Recommendations** — Quick Wins / Strategic / Watch
+
+### Reduced report (`has_jc_loyalty = false`)
+
+Add a note in Executive Summary: "Loyalty data (points, tiers, transactions, redemptions) is managed by {external provider} and is not included in this report."
+
+1. **Cover Page**
+2. **Executive Summary** — Limited KPIs: Total Members, Active Passes, Install Rate, Churn Rate + external provider note
+3. **Membership & Growth**
+4. **Pass Engagement**
+5. **Push Campaigns**
+6. **Web App Usage**
+7. **Event Activity**
+8. **What's Working Well** (only if ≥ 2 thresholds met, limited metrics)
+9. **Insights & Recommendations** (adapted heuristics)
+
+### What's Working Well — Thresholds
+
+**Only include if ≥ 2 thresholds are met. Do NOT fabricate positive narratives.**
+
+| Metric | Threshold | Highlight |
+|--------|-----------|-----------|
+| Pass churn rate | < 5% | Exceptional retention |
+| Pass install MoM growth | > 50% for 2+ months | Accelerating adoption |
+| Apple/Google split | Neither < 20% | Cross-platform reach |
+| Campaign CTR | Any > 10% | High-impact campaigns |
+| Reward conversion (issued-to-used) | > 30% | Compelling rewards *(full only)* |
+| Repeat purchasers | > 30% of members | Strong engagement *(full only)* |
+| Tier progression | > 1% in non-base tiers | Active progression *(full only)* |
+| Revenue per customer | > 2x AOV | High lifetime value *(full only)* |
+| Engagement flow adoption | Any non-signup > 1,000 exec/30d | Active loops *(full only)* |
+| Web app visits (90d) | > 2,000 | Digital hub traction |
+| New members (30d) | > 10% of total base | Acquisition momentum |
+| Referral program | > 50 referred customers | Organic growth *(full only)* |
+
+### Recommendation heuristics — Full report
 
 | Condition | Recommendation |
 |-----------|---------------|
@@ -278,6 +341,23 @@ After collecting ALL data, generate a professional PDF report using **ReportLab*
 | Only 1 tier | Suggest implementing tier system for gamification |
 | No recent campaigns | Encourage regular push cadence (2–4/month) |
 | Avg balance high but low redemptions | Rewards may be too expensive or not compelling |
+| All tier factors = 1x | Differentiate multipliers to incentivize progression |
+| Cheapest reward requires > 500 EUR spend to earn | Add lower-cost rewards (200–500 pts) |
+| MEMBER_GET_MEMBER active but 0 executions | Promote referral program across touchpoints |
+| CUSTOMER_SCANNED disabled | Enable to reward in-store engagement |
+
+### Recommendation heuristics — Reduced report
+
+| Condition | Recommendation |
+|-----------|---------------|
+| Pass install rate < 30% | Improve distribution |
+| Churn > 20% | Investigate pass value proposition |
+| No recent campaigns | Encourage push cadence |
+| CTR < 5% | Review copy, timing, segmentation |
+| Campaign audiences < 100 | Focus on growing pass adoption first |
+| Web app visits < 500 (90d) | Drive traffic via wallet pass and emails |
+| Rewards page < 10% of total visits | Improve discoverability |
+| External provider limits data visibility | Consider evaluating migration to JeriCommerce loyalty |
 
 ### Visual design
 

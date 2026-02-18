@@ -6,7 +6,7 @@ description: >
   performance report", or provides a program UUID, slug, or name expecting
   a JeriCommerce loyalty program analysis. Covers the full data collection,
   analysis, and PDF report generation workflow.
-version: 202602.18.0
+version: 202602.18.1
 ---
 
 # JeriCommerce Loyalty Report Generator
@@ -73,10 +73,29 @@ If ambiguous, ask the user to confirm which program.
 ## Workflow
 
 1. **Identify the program** — Use `Metabase:execute` with `database_id: 3` and the Step 1 query from `references/sql-queries.md` to get the program UUID and details.
-2. **Collect all data** — Execute Steps 2–16 from `references/sql-queries.md` **in order** via `Metabase:execute` (database_id: 3), using the program UUID. Run ALL queries before generating the report. Do NOT generate partial reports.
-3. **Analyze data** — Apply the heuristics from `references/report-structure.md` (Section: Insights & Recommendations) to generate actionable recommendations.
-4. **Generate PDF** — Read the PDF skill (`/mnt/.skills/skills/pdf/SKILL.md`) and create the report following the structure and branding in `references/report-structure.md`.
-5. **File naming** — Save as `{program_name}_loyalty_report_{YYYY-MM-DD}.pdf`
+
+2. **Detect integration provider** — Run the Step 1.5 query from `references/sql-queries.md` to determine `has_jc_loyalty`, `has_jc_rewards`, and `active_integrations`. This decides which queries and report sections to include.
+
+3. **Collect data (conditional)** — Execute queries from `references/sql-queries.md` via `Metabase:execute` (database_id: 3). Use this decision tree:
+
+   **Always run:** Steps 2–6, 13–16 (subscription, membership, passes, origin, campaigns, events, web visits, referrals)
+
+   **Only if `has_jc_loyalty = true`:** Steps 7–11 (balances, tiers, revenue, monthly trend, engagement flows)
+
+   **Only if `has_jc_rewards = true`:** Step 12 (rewards catalog & redemption)
+
+   | Condition | Skip report sections | Skip queries |
+   |-----------|---------------------|--------------|
+   | `has_jc_loyalty = false` | Loyalty Economics, Revenue Impact, Engagement Flows | Steps 7, 8, 9, 10, 11 |
+   | `has_jc_rewards = false` | Rewards & Redemption | Step 12 |
+
+   Run ALL applicable queries before generating the report. Do NOT generate partial reports.
+
+4. **Analyze data** — Apply the heuristics from `references/report-structure.md` (use the appropriate heuristic set based on `has_jc_loyalty`). Generate actionable recommendations.
+
+5. **Generate PDF** — Read the PDF skill (`/mnt/.skills/skills/pdf/SKILL.md`) and create the report following the structure and branding in `references/report-structure.md`. Use the full or reduced report structure based on integration detection.
+
+6. **File naming** — Save as `{program_name}_loyalty_report_{YYYY-MM-DD}.pdf`
 
 ## Key Data Notes
 

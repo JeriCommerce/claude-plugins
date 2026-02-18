@@ -135,7 +135,7 @@ The report is written by a **JeriCommerce analyst** addressed to the **client** 
 - **Section introductions should be 1–2 sentences max**, then go straight to the data
 - The report should feel **airy and scannable**, not dense and academic
 
-## Report Sections
+## Report Sections — Full Report (`has_jc_loyalty = true`)
 
 ### Cover Page
 - Full-page `PRIMARY` background with `PRIMARY_D` stripe
@@ -178,7 +178,7 @@ The report is written by a **JeriCommerce analyst** addressed to the **client** 
 - Full table: flow name, active status, rates, points, total executions, unique customers, last 30d
 - Inactive flows that could be activated
 
-### 6. Rewards & Redemption
+### 6. Rewards & Redemption (only if `has_jc_rewards = true`)
 - Reward catalog table
 - Redemption funnel KPI strip (issued → claimed → used → conversion rate)
 - Claim rate and usage rate per reward
@@ -198,7 +198,28 @@ The report is written by a **JeriCommerce analyst** addressed to the **client** 
 ### 9. Event Activity (Last 90 Days)
 - Full event summary table: type, total events, unique customers, last occurrence
 
-### 10. Insights & Recommendations
+### 10. What's Working Well (only if ≥ 2 thresholds met)
+
+**Critical rule:** Only include this section if at least 2 of the thresholds below are met. If fewer than 2 qualify, skip this section entirely. Do NOT fabricate positive narratives from weak data.
+
+| Metric | Threshold | Highlight framing |
+|--------|-----------|-------------------|
+| Pass churn rate | < 5% | Exceptional retention |
+| Pass install MoM growth | > 50% for 2+ consecutive months | Accelerating adoption |
+| Apple/Google split | Neither < 20% | Cross-platform reach |
+| Campaign CTR | Any campaign > 10% | High-impact campaigns |
+| Reward conversion (issued-to-used) | > 30% | Compelling rewards |
+| Repeat purchasers | > 30% of members | Strong purchase engagement |
+| Tier progression | > 1% in non-base tiers | Active tier progression |
+| Revenue per customer | > 2x AOV | High lifetime value |
+| Engagement flow adoption | Any non-signup flow > 1,000 exec/30d | Active engagement loops |
+| Web app visits (90d) | > 2,000 | Digital hub traction |
+| New members (30d) | > 10% of total base | Strong acquisition momentum |
+| Referral program | > 50 referred customers | Organic growth engine |
+
+Each qualifying metric: titled paragraph with the specific number and why it matters.
+
+### 11. Insights & Recommendations
 
 Provide **5–8 actionable recommendations** grouped by priority:
 
@@ -206,7 +227,7 @@ Provide **5–8 actionable recommendations** grouped by priority:
 - **Strategic** (require planning)
 - **Watch** (monitor these metrics)
 
-#### Recommendation Heuristics
+#### Recommendation Heuristics (full report)
 
 | Condition | Recommendation |
 |-----------|---------------|
@@ -218,3 +239,62 @@ Provide **5–8 actionable recommendations** grouped by priority:
 | Only 1 tier | Suggest implementing tier system for gamification |
 | No recent campaigns | Encourage regular push cadence (2–4/month) |
 | Avg balance high but low redemptions | Rewards may be too expensive or not compelling |
+| All tier factors = 1x | Differentiate multipliers to incentivize progression |
+| Cheapest reward requires > 500 EUR spend to earn | Add lower-cost rewards (200–500 pts) |
+| Tier welcome rewards unused | Improve visibility or auto-apply on tier upgrade |
+| MEMBER_GET_MEMBER active but 0 executions | Promote referral program across touchpoints |
+| CUSTOMER_SCANNED disabled | Enable to reward in-store engagement |
+
+---
+
+## Report Sections — Reduced Report (`has_jc_loyalty = false`)
+
+When the program uses an external loyalty provider, generate a reduced report. Add a note in the Executive Summary stating which external provider manages loyalty (from `active_integrations`), and that points, balances, tiers, transactions and redemptions are managed externally and not reflected in the report.
+
+### Cover Page
+- Same as full report
+
+### Executive Summary (limited KPIs)
+- KPI cards: Total Members, Active Passes, Install Rate, Churn Rate (no revenue/AOV)
+- Note: "Loyalty data (points, tiers, transactions, redemptions) is managed by {external provider} and is not included in this report."
+- 2–3 sentence narrative summary
+
+### 1. Membership & Growth
+- Same as full report
+
+### 2. Pass Engagement
+- Same as full report
+
+### 3. Push Campaigns
+- Same as full report §7
+
+### 4. Web App Usage
+- Same as full report §8
+
+### 5. Event Activity (Last 90 Days)
+- Same as full report §9
+
+### 6. What's Working Well (only if ≥ 2 thresholds met)
+
+When `has_jc_loyalty = false`, only evaluate these metrics:
+- Pass churn rate (< 5%)
+- Pass install MoM growth (> 50% for 2+ months)
+- Apple/Google split (neither < 20%)
+- Campaign CTR (any > 10%)
+- Web app visits 90d (> 2,000)
+- New members 30d (> 10% of total base)
+
+### 7. Insights & Recommendations (adapted)
+
+#### Recommendation Heuristics (reduced report)
+
+| Condition | Recommendation |
+|-----------|---------------|
+| Pass install rate < 30% | Improve distribution |
+| Churn > 20% | Investigate pass value proposition |
+| No recent campaigns | Encourage push cadence |
+| CTR < 5% | Review copy, timing, segmentation |
+| Campaign audiences < 100 | Focus on growing pass adoption first |
+| Web app visits < 500 (90d) | Drive traffic via wallet pass and emails |
+| Rewards page < 10% of total visits | Improve discoverability |
+| External loyalty provider limits data visibility | Consider evaluating migration to JeriCommerce loyalty for full analytics |
