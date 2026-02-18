@@ -90,6 +90,20 @@ If ambiguous, ask the user to confirm which program.
 - If a query returns empty results, note it in the report as "No data available" — do NOT skip the section
 - If the program has an `integration` field set (e.g. LoyaltyLion), note that loyalty data may be managed externally
 
+## Data Milestones
+
+Important dates and facts that affect how data should be interpreted. Always consider these when analyzing results — mention them in the report when they impact a metric.
+
+| Date / Fact | Impact |
+|-------------|--------|
+| 2026-02-17 | Start of coupon code → transaction linking. Before this date, `coupon_codes.transaction_id` is always NULL. Do NOT interpret pre-2026-02-17 NULL values as "unused codes" — tracking simply didn't exist yet. |
+| All transactions | Only non-anonymous (identified) customers are stored. Anonymous purchases are NOT in the database. Revenue and transaction metrics reflect only identified loyalty members, not total store revenue. |
+
+When generating the report:
+- If analyzing coupon redemption rates, note that `codes_used` (linked to transactions) is only reliable from 2026-02-17 onwards
+- If comparing revenue metrics, clarify that figures represent identified member revenue only, not total store revenue
+- Add a footnote in the relevant sections when a milestone affects the data interpretation
+
 ## Reference Files
 
 - **`references/sql-queries.md`** — All 16 SQL queries for data collection (Steps 1–16)

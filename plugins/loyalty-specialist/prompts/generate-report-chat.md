@@ -290,6 +290,15 @@ After collecting ALL data, generate a professional PDF report with these section
 - **One idea per paragraph** — separate concepts with line breaks
 - The report should feel **airy and scannable**, not dense
 
+### Data milestones
+
+Consider these when analyzing results — mention them in the report when they impact a metric:
+
+| Date / Fact | Impact |
+|-------------|--------|
+| 2026-02-17 | Start of coupon code → transaction linking. Before this date, `coupon_codes.transaction_id` is always NULL — do NOT interpret as "unused codes". |
+| All transactions | Only non-anonymous (identified) customers are stored. Anonymous purchases are NOT in the database. Revenue metrics reflect identified members only, not total store revenue. |
+
 ### Data notes
 
 - **Amounts**: `transactions.amount` is in **cents** — divide by 100
