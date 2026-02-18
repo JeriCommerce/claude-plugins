@@ -16,6 +16,17 @@ File name: `{program_name}_loyalty_report_{YYYY-MM-DD}.pdf`
 - Data tables with alternating row shading
 - Footer on every page: generation timestamp + "Confidential — Prepared by JeriCommerce"
 
+## Writing Style & Readability
+
+- **Use short paragraphs** — max 2–3 sentences per paragraph, then add a line break
+- **Add blank lines between every paragraph, bullet group, and table** to create visual breathing room
+- **Never write walls of text** — if a paragraph exceeds 3 lines, break it into two
+- **Use bullet points** instead of inline lists (never "A, B, and C" — use a bulleted list instead)
+- **One idea per paragraph** — separate different concepts with line breaks
+- **Add a line break before and after every table and data block**
+- **Section introductions should be 1–2 sentences max**, then go straight to the data
+- The report should feel **airy and scannable**, not dense and academic
+
 ## Report Sections
 
 ### Cover Page

@@ -281,6 +281,15 @@ After collecting ALL data, generate a professional PDF report with these section
 - Primary purple: `#7000FF` | Dark: `#1C1C1C` | Grey: `#666666` | Light purple: `#F3EEFF`
 - Footer on every page: generation timestamp + "Confidential — Prepared by JeriCommerce"
 
+### Writing style
+
+- **Short paragraphs only** — max 2–3 sentences, then add a line break
+- **Add blank lines** between every paragraph, bullet group, and table
+- **Never write walls of text** — if a paragraph exceeds 3 lines, split it
+- **Use bullet points** instead of inline comma-separated lists
+- **One idea per paragraph** — separate concepts with line breaks
+- The report should feel **airy and scannable**, not dense
+
 ### Data notes
 
 - **Amounts**: `transactions.amount` is in **cents** — divide by 100
