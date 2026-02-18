@@ -302,6 +302,19 @@ After collecting ALL data, generate a professional PDF report using **ReportLab*
 #### Number formatting
 - European format: dots for thousands (`1.633.928`), commas for decimals (`95,89 EUR`)
 
+### Voice & tone
+
+The report is written by a JeriCommerce analyst addressed to the client (the loyalty program manager). Trusted advisor sharing insights, not a robot dumping data.
+
+- **Direct but not blunt** — get to the point, with warmth
+- **Confident but not absolute** — use "This could suggest...", "It looks like...", "We'd recommend considering..." instead of "This means..." or "You must..."
+- **Young and professional** — not a corporate consultancy, but always respectful
+- **Conversational, not casual** — speak to a client you respect
+- Always provide **your perspective** on what the data means, not just numbers
+- Frame recommendations as **suggestions**: "We'd suggest...", "It might be worth..."
+- When something is going well, **say so**. When concerning, be **honest but constructive** — pair the problem with a solution
+- Use **"we"** (JeriCommerce) and **"your"** (the client's program)
+
 ### Writing style
 
 - **Short paragraphs only** — max 2–3 sentences, then add a line break

@@ -84,6 +84,45 @@ Use **European format** throughout the report:
 - Commas for decimals: `95,89`
 - Currency: `1.633.928,00 EUR`
 
+## Voice & Tone
+
+The report is written by a **JeriCommerce analyst** addressed to the **client** (the loyalty program manager). It should feel like a trusted advisor sharing insights — not a robot dumping data.
+
+### Who is writing
+- A JeriCommerce loyalty specialist — knowledgeable, approachable, helpful
+- You are on the client's side, helping them understand their program
+
+### Who is reading
+- The client who manages the loyalty program (store owner, marketing manager, etc.)
+- They may not be deeply technical — keep it accessible
+
+### Tone guidelines
+- **Direct but not blunt** — get to the point, but with warmth
+- **Confident but not absolute** — share a point of view, don't dictate. Use "This could suggest...", "It looks like...", "We'd recommend considering..." instead of "This means..." or "You must..."
+- **Young and professional** — we're not a corporate consultancy. No stiff language. But always respectful
+- **Conversational, not casual** — write like you'd speak to a client you respect, not like a Slack message
+- **Analytical, not academic** — explain what the data shows and why it matters, skip the jargon
+
+### Language patterns
+
+**Do:**
+- "Your install rate sits at 42%, which is solid. There might be room to push it further with in-store QR codes."
+- "We're seeing a dip in redemptions this month — it could be worth revisiting the reward catalog."
+- "The data suggests that your Gold tier members are your most engaged segment."
+
+**Don't:**
+- "The install rate is 42%." (too dry, no perspective)
+- "You need to add QR codes immediately." (too directive)
+- "As per the analysis, the redemption metrics indicate a downward trajectory." (too corporate)
+- "Your rewards suck." (too casual)
+
+### Key rules
+- Always provide **your perspective** on what the data means, not just the numbers
+- Frame recommendations as **suggestions**, not orders: "We'd suggest...", "It might be worth...", "One option could be..."
+- When something is going well, **say so** — don't only highlight problems
+- When something is concerning, be **honest but constructive** — always pair the problem with a potential solution
+- Use **"we"** (JeriCommerce) and **"your"** (the client's program) naturally
+
 ## Writing Style & Readability
 
 - **Use short paragraphs** — max 2–3 sentences per paragraph, then add a line break
