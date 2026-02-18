@@ -296,7 +296,8 @@ After collecting ALL data, generate a professional PDF report using **ReportLab*
 #### Layout
 - Page size: A4, margins: 22mm all sides
 - Each major section starts on a new page (`PageBreak`)
-- Content pages: 8pt purple accent bar at top, footer with timestamp + page number
+- **Only the cover page has a purple background** — all content pages are white
+- Content pages: thin 2pt purple accent line at top (subtle), footer with timestamp + page number
 - Section pattern: Title → Separator → Spacer → KPI strip(s) → Subtitle → Table → Narrative
 
 #### Number formatting

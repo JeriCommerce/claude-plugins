@@ -35,7 +35,8 @@ WHITE      = "#FFFFFF"
 - Footer: Helvetica 8pt, `#AA88FF`, centered — "Confidential -- Prepared by JeriCommerce"
 
 **Content Pages** (`onPage` canvas drawing):
-- Top accent bar: solid `PRIMARY` fill, full width, 8pt height at page top
+- **White background** — content pages must have a clean white background, no purple fill
+- Top accent bar: thin `PRIMARY` line (2pt), full width at page top — subtle, not dominant
 - Footer line: 0.5pt `BORDER` colored line at y=28
 - Footer left: generation timestamp + confidentiality (Helvetica 7pt, `GREY_L`)
 - Footer right: "Page N" (page number minus 1, since cover is page 0)
