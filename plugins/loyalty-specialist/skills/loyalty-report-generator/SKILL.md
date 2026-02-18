@@ -11,7 +11,24 @@ version: 0.1.0
 
 # JeriCommerce Loyalty Report Generator
 
-Generate professional PDF loyalty program performance reports by querying the JeriCommerce production database via Metabase and analyzing the results.
+Generate professional PDF loyalty program performance reports by querying the JeriCommerce production database via the Metabase MCP connector and analyzing the results.
+
+## Required MCP Tool
+
+**All SQL queries MUST be executed through the Metabase MCP server**, never directly against the database.
+
+Use the MCP tool to run native queries against the JeriCommerce database:
+
+```
+Tool: mcp__metabase__run-native-query
+Parameters:
+  database_id: 3
+  query: "<SQL query here>"
+```
+
+**IMPORTANT**: Do NOT attempt to connect to the database directly. Do NOT use `psql`, `pg`, or any other database client. Always use the `mcp__metabase__run-native-query` tool with `database_id: 3`.
+
+If the Metabase MCP tool is not available, inform the user that the Metabase MCP server must be configured before generating reports.
 
 ## Input
 
@@ -22,7 +39,7 @@ The user provides one of:
 
 If ambiguous, ask the user to confirm which program.
 
-## Database Connection
+## Database Details
 
 - **Metabase database_id: 3** (`jericommerce-db`, PostgreSQL 17.7, timezone `Europe/Madrid`)
 - All monetary amounts in `transactions.amount` are in **cents** (divide by 100)
@@ -31,8 +48,8 @@ If ambiguous, ask the user to confirm which program.
 
 ## Workflow
 
-1. **Identify the program** — Run the Step 1 query from `references/sql-queries.md` to get the program UUID and details.
-2. **Collect all data** — Execute Steps 2–16 from `references/sql-queries.md` **in order**, using the program UUID. Run ALL queries before generating the report. Do NOT generate partial reports.
+1. **Identify the program** — Use `mcp__metabase__run-native-query` with the Step 1 query from `references/sql-queries.md` to get the program UUID and details.
+2. **Collect all data** — Execute Steps 2–16 from `references/sql-queries.md` **in order** via `mcp__metabase__run-native-query`, using the program UUID. Run ALL queries before generating the report. Do NOT generate partial reports.
 3. **Analyze data** — Apply the heuristics from `references/report-structure.md` (Section: Insights & Recommendations) to generate actionable recommendations.
 4. **Generate PDF** — Read the PDF skill (`/mnt/.skills/skills/pdf/SKILL.md`) and create the report following the structure and branding in `references/report-structure.md`.
 5. **File naming** — Save as `{program_name}_loyalty_report_{YYYY-MM-DD}.pdf`
