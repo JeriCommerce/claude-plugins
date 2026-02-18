@@ -29,15 +29,18 @@ claude-plugins/
 
 ## Versioning
 
-All versions in this repo use **date-based format**:
+All versions in this repo use **date-based semver** format:
 
 ```
-YYYY.MM.DD-N
+YYYYMM.DD.N
 ```
 
-- `N` starts at `0` for the first release of the day
-- Increment `N` for each subsequent release on the same day
-- Example: `2026.02.18-0`, `2026.02.18-1`, `2026.02.19-0`
+- `YYYYMM` = year + month (MAJOR) — e.g., `202602`
+- `DD` = day of month (MINOR) — e.g., `18`
+- `N` = release number of the day (PATCH) — starts at `0`
+- Example: `202602.18.0`, `202602.18.1`, `202602.19.0`
+
+This format is **semver-compliant** (`MAJOR.MINOR.PATCH`) which is required by Claude Code's plugin system.
 
 **Where versions live** (keep in sync):
 1. `plugins/{name}/.claude-plugin/plugin.json` → `version`

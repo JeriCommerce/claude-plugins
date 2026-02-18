@@ -20,7 +20,7 @@ Then install individual plugins:
 
 | Plugin | Description | Version |
 |--------|-------------|---------|
-| [loyalty-specialist](./plugins/loyalty-specialist/) | Generate professional PDF loyalty program performance reports by querying Metabase and analyzing program data | 2026.02.18-2 |
+| [loyalty-specialist](./plugins/loyalty-specialist/) | Generate professional PDF loyalty program performance reports by querying Metabase and analyzing program data | 202602.18.0 |
 
 ## Updating
 
