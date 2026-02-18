@@ -13,18 +13,32 @@ Given a program UUID, slug, or name, this plugin queries the JeriCommerce produc
 
 ## Usage
 
+### Cowork mode (plugin installed)
+
 ```
 /generate-report old-jeffrey
 /generate-report 91133c45-9401-4c6c-9f90-284ef7cf5b6f
-/generate-report Old Jeffrey
+/generate-report Old Jeffrey "focus on churn and reactivation"
 ```
+
+### Chat mode (no plugin needed)
+
+If the Metabase connector doesn't work in Cowork, use Chat mode instead:
+
+1. Open the file `prompts/generate-report-chat.md` from this plugin
+2. Copy the entire content
+3. Replace `{PROGRAM}` with your program UUID, slug, or name
+4. Paste it into a Claude Desktop **Chat** conversation (with Metabase connector enabled)
+
+The Chat prompt is self-contained — it includes all SQL queries, report structure, and branding inline.
 
 ## Components
 
 | Component | Name | Purpose |
 |-----------|------|---------|
-| Command | `/generate-report` | Entry point — triggers the full report workflow |
-| Skill | `loyalty-report-generator` | Domain knowledge: SQL queries, report structure, branding, recommendation heuristics |
+| Command | `/generate-report` | Entry point — triggers the full report workflow (Cowork) |
+| Skill | `loyalty-report-generator` | Domain knowledge: SQL queries, report structure, branding, recommendation heuristics (Cowork) |
+| Prompt | `prompts/generate-report-chat.md` | Self-contained prompt with all queries inline (Chat) |
 
 ## Report Sections
 

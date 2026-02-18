@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "Official JeriCommerce plugins for Claude Code. Loyalty programs, ecommerce analytics, and more.",
-    "version": "2026.02.18-1"
+    "version": "2026.02.18-2"
   },
   "plugins": [
     {
       "name": "loyalty-specialist",
       "source": "./plugins/loyalty-specialist",
       "description": "Generate professional PDF loyalty program performance reports for JeriCommerce clients by querying Metabase and analyzing program data",
-      "version": "2026.02.18-1",
+      "version": "2026.02.18-2",
       "author": {
         "name": "JeriCommerce"
       },
