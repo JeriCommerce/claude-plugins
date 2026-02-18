@@ -1,0 +1,29 @@
+{
+  "name": "jericommerce-plugins",
+  "owner": {
+    "name": "JeriCommerce"
+  },
+  "metadata": {
+    "description": "Official JeriCommerce plugins for Claude Code. Loyalty programs, ecommerce analytics, and more.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "loyalty-specialist",
+      "source": "./plugins/loyalty-specialist",
+      "description": "Generate professional PDF loyalty program performance reports for JeriCommerce clients by querying Metabase and analyzing program data",
+      "version": "0.1.0",
+      "author": {
+        "name": "JeriCommerce"
+      },
+      "keywords": [
+        "jericommerce",
+        "loyalty",
+        "report",
+        "metabase",
+        "shopify"
+      ],
+      "category": "analytics"
+    }
+  ]
+}
