@@ -8,7 +8,7 @@ Given a program UUID, slug, or name, this plugin queries the JeriCommerce produc
 
 ## Prerequisites
 
-- **Metabase MCP server** must be connected and configured. This plugin uses the `mcp__metabase__run-native-query` tool to execute SQL queries against `database_id: 3` (jericommerce-db, PostgreSQL 17.7). If the Metabase MCP server is not available, the plugin will not be able to collect data.
+- **Metabase connector extension** must be enabled in the Desktop app (Settings → Extensions → Metabase). This plugin uses `Metabase:execute` to run SQL queries against `database_id: 3` (jericommerce-db, PostgreSQL 17.7). If the Metabase extension is not available, the plugin will not be able to collect data.
 - **PDF skill** available in the Cowork environment
 
 ## Usage

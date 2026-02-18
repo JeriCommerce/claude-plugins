@@ -194,28 +194,40 @@ When invoked:
 
 ---
 
-## MCP Tool References
+## External Tool References
 
-When a plugin depends on an external MCP tool, **always** document:
+When a plugin depends on an external tool (connector extension, MCP server, etc.), **always** document:
 
-1. The exact tool name: `mcp__{server}__{tool-name}`
+1. The exact tool name (e.g., `Metabase:execute`, `mcp__{server}__{tool}`)
 2. Required parameters with example values
 3. What happens if the tool is unavailable
+4. Where to enable it (Settings → Extensions, MCP config, etc.)
 
-Example:
+### Connector extensions (Desktop app)
+
+Tools from connector extensions use the format `{Connector}:{tool}`:
 
 ```markdown
-## Required MCP Tool
+## Required Tools — Metabase Connector
 
-All queries MUST be executed through the Metabase MCP server:
+All queries MUST be executed through the Metabase connector:
 
-Tool: `mcp__metabase__run-native-query`
+Tool: `Metabase:execute`
 Parameters:
   database_id: 3
-  query: "<SQL>"
+  query: "SELECT ..."
 
-Do NOT connect to the database directly. If the tool is unavailable,
-inform the user that the Metabase MCP server must be configured.
+If unavailable, inform the user to enable it in Settings → Extensions.
+```
+
+### MCP servers
+
+Tools from MCP servers use the format `mcp__{server}__{tool}`:
+
+```markdown
+Tool: `mcp__github__search_repositories`
+Parameters:
+  query: "org:JeriCommerce"
 ```
 
 ---

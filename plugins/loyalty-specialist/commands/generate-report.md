@@ -20,9 +20,9 @@ Follow these steps exactly:
 
 3. Read the report structure reference at `${CLAUDE_PLUGIN_ROOT}/skills/loyalty-report-generator/references/report-structure.md`.
 
-4. Execute **Step 1** from the SQL queries to identify the program using `mcp__metabase__run-native-query` with `database_id: 3`. If the input looks like a UUID, query by `id`. If it contains only lowercase letters and hyphens, query by `slug`. Otherwise, search by name with `ILIKE`. If multiple results are found, ask the user to confirm.
+4. Execute **Step 1** from the SQL queries to identify the program using `Metabase:execute` with `database_id: 3`. If the input looks like a UUID, query by `id`. If it contains only lowercase letters and hyphens, query by `slug`. Otherwise, search by name with `ILIKE`. If multiple results are found, ask the user to confirm.
 
-5. Execute **Steps 2–16** sequentially using the confirmed program UUID. **All queries must be run through `mcp__metabase__run-native-query` with `database_id: 3`**. Never connect to the database directly. Collect ALL results before proceeding.
+5. Execute **Steps 2–16** sequentially using the confirmed program UUID. **All queries must be run through `Metabase:execute` with `database_id: 3`**. Never connect to the database directly. Collect ALL results before proceeding.
 
 6. Analyze the collected data applying the recommendation heuristics from the report structure reference.
 

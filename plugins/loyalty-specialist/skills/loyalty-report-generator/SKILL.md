@@ -6,29 +6,53 @@ description: >
   performance report", or provides a program UUID, slug, or name expecting
   a JeriCommerce loyalty program analysis. Covers the full data collection,
   analysis, and PDF report generation workflow.
-version: 2026.02.18-0
+version: 2026.02.18-1
 ---
 
 # JeriCommerce Loyalty Report Generator
 
 Generate professional PDF loyalty program performance reports by querying the JeriCommerce production database via the Metabase MCP connector and analyzing the results.
 
-## Required MCP Tool
+## Required Tools — Metabase Connector
 
-**All SQL queries MUST be executed through the Metabase MCP server**, never directly against the database.
+**All SQL queries MUST be executed through the Metabase connector extension**, never directly against the database.
 
-Use the MCP tool to run native queries against the JeriCommerce database:
+### Available Metabase tools
+
+| Tool | Purpose | Limit |
+|------|---------|-------|
+| `Metabase:execute` | Run SQL queries or saved cards | Max 500 rows |
+| `Metabase:export` | Export query results as CSV/JSON/XLSX | Max 1M rows |
+| `Metabase:search` | Search across cards, dashboards, tables | — |
+| `Metabase:retrieve` | Get details of a specific item by ID | — |
+| `Metabase:list` | List all items of a type | — |
+
+### How to execute SQL queries
+
+Use `Metabase:execute` to run native SQL queries against the JeriCommerce database:
 
 ```
-Tool: mcp__metabase__run-native-query
+Tool: Metabase:execute
 Parameters:
   database_id: 3
-  query: "<SQL query here>"
+  query: "SELECT id, name FROM programs LIMIT 5"
 ```
 
-**IMPORTANT**: Do NOT attempt to connect to the database directly. Do NOT use `psql`, `pg`, or any other database client. Always use the `mcp__metabase__run-native-query` tool with `database_id: 3`.
+For large result sets (>500 rows), use `Metabase:export` instead:
 
-If the Metabase MCP tool is not available, inform the user that the Metabase MCP server must be configured before generating reports.
+```
+Tool: Metabase:export
+Parameters:
+  database_id: 3
+  query: "SELECT * FROM customers WHERE program_id = '...'"
+  format: "json"
+```
+
+**IMPORTANT**:
+- Do NOT attempt to connect to the database directly
+- Do NOT use `psql`, `pg`, or any other database client
+- Always use `Metabase:execute` with `database_id: 3` for all queries
+- If the Metabase connector is not available, inform the user that the Metabase extension must be enabled in Settings → Extensions before generating reports
 
 ## Input
 
@@ -48,8 +72,8 @@ If ambiguous, ask the user to confirm which program.
 
 ## Workflow
 
-1. **Identify the program** — Use `mcp__metabase__run-native-query` with the Step 1 query from `references/sql-queries.md` to get the program UUID and details.
-2. **Collect all data** — Execute Steps 2–16 from `references/sql-queries.md` **in order** via `mcp__metabase__run-native-query`, using the program UUID. Run ALL queries before generating the report. Do NOT generate partial reports.
+1. **Identify the program** — Use `Metabase:execute` with `database_id: 3` and the Step 1 query from `references/sql-queries.md` to get the program UUID and details.
+2. **Collect all data** — Execute Steps 2–16 from `references/sql-queries.md` **in order** via `Metabase:execute` (database_id: 3), using the program UUID. Run ALL queries before generating the report. Do NOT generate partial reports.
 3. **Analyze data** — Apply the heuristics from `references/report-structure.md` (Section: Insights & Recommendations) to generate actionable recommendations.
 4. **Generate PDF** — Read the PDF skill (`/mnt/.skills/skills/pdf/SKILL.md`) and create the report following the structure and branding in `references/report-structure.md`.
 5. **File naming** — Save as `{program_name}_loyalty_report_{YYYY-MM-DD}.pdf`
