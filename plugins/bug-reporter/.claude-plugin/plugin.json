@@ -1,0 +1,16 @@
+{
+  "name": "bug-reporter",
+  "description": "Report bugs and customer issues to Linear. Guides users through structured bug reporting with screenshots/videos, then creates a classified issue in the JeriCommerce support project.",
+  "version": "202602.19.0",
+  "author": {
+    "name": "JeriCommerce"
+  },
+  "keywords": [
+    "jericommerce",
+    "linear",
+    "bug",
+    "support",
+    "issue",
+    "customer"
+  ]
+}

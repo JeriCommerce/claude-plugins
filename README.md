@@ -21,6 +21,7 @@ Then install individual plugins:
 | Plugin | Description | Version |
 |--------|-------------|---------|
 | [loyalty-specialist](./plugins/loyalty-specialist/) | Generate professional PDF loyalty program performance reports by querying Metabase and analyzing program data | 202602.18.2 |
+| [bug-reporter](./plugins/bug-reporter/) | Report bugs and customer issues to Linear through guided conversational flow with screenshots/video support | 202602.19.0 |
 
 ## Updating
 

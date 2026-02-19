@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Official JeriCommerce plugins for Claude Code. Loyalty programs, ecommerce analytics, and more.",
-    "version": "202602.18.2"
+    "version": "202602.19.0"
   },
   "plugins": [
     {
@@ -24,6 +24,24 @@
         "shopify"
       ],
       "category": "analytics"
+    },
+    {
+      "name": "bug-reporter",
+      "source": "./plugins/bug-reporter",
+      "description": "Report bugs and customer issues to Linear through guided conversational flow with screenshots and video support",
+      "version": "202602.19.0",
+      "author": {
+        "name": "JeriCommerce"
+      },
+      "keywords": [
+        "jericommerce",
+        "linear",
+        "bug",
+        "support",
+        "issue",
+        "customer"
+      ],
+      "category": "support"
     }
   ]
 }
