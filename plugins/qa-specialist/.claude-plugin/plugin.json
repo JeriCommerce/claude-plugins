@@ -1,0 +1,18 @@
+{
+  "name": "qa-specialist",
+  "description": "QA testing assistant that helps verify features and bugs using the JeriCommerce API, Metabase data, and BetterStack logs. Documents findings directly in Linear tickets.",
+  "version": "202602.21.0",
+  "author": {
+    "name": "JeriCommerce"
+  },
+  "keywords": [
+    "jericommerce",
+    "qa",
+    "testing",
+    "linear",
+    "metabase",
+    "betterstack",
+    "api",
+    "swagger"
+  ]
+}

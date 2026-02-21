@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Official JeriCommerce plugins for Claude Code. Loyalty programs, ecommerce analytics, and more.",
-    "version": "202602.19.0"
+    "version": "202602.21.0"
   },
   "plugins": [
     {
@@ -42,6 +42,25 @@
         "customer"
       ],
       "category": "support"
+    },
+    {
+      "name": "qa-specialist",
+      "source": "./plugins/qa-specialist",
+      "description": "QA testing assistant that helps verify features and bugs using the JeriCommerce API, Metabase data, and BetterStack logs, documenting findings in Linear tickets",
+      "version": "202602.21.0",
+      "author": {
+        "name": "JeriCommerce"
+      },
+      "keywords": [
+        "jericommerce",
+        "qa",
+        "testing",
+        "linear",
+        "metabase",
+        "betterstack",
+        "api"
+      ],
+      "category": "quality-assurance"
     }
   ]
 }
