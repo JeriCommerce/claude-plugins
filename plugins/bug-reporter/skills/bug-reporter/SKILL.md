@@ -170,6 +170,10 @@ For better context when writing issue descriptions, consult the JeriCommerce sup
 - Understand feature names and how they work from the user's perspective
 - Write more precise descriptions that the development team can act on quickly
 
+## Language
+
+All content written to Linear (title, description, comments) **must be in English**, regardless of the language the user is speaking in the conversation. The conversation with the user can be in any language, but everything that goes into Linear is always in English.
+
 ## Voice & Tone
 
 - Be helpful and patient — the person reporting may be stressed

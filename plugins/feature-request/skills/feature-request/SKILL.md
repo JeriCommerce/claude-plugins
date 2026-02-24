@@ -196,6 +196,10 @@ For better context when writing feature request descriptions, consult the JeriCo
 - Understand existing features and how they work
 - Write user stories that align with the product's domain language
 
+## Language
+
+All content written to Linear (title, description, customer needs) **must be in English**, regardless of the language the user is speaking in the conversation. The conversation with the user can be in any language, but everything that goes into Linear is always in English.
+
 ## Voice & Tone
 
 - Be curious and thorough — the goal is to capture the request so well that anyone reading it understands exactly what the customer wants
