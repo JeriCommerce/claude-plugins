@@ -20,9 +20,10 @@ Then install individual plugins:
 
 | Plugin | Description | Version |
 |--------|-------------|---------|
-| [loyalty-specialist](./plugins/loyalty-specialist/) | Generate professional PDF loyalty program performance reports by querying Metabase and analyzing program data | 202602.18.2 |
-| [bug-reporter](./plugins/bug-reporter/) | Report bugs and customer issues to Linear through guided conversational flow with screenshots/video support | 202602.19.0 |
-| [qa-specialist](./plugins/qa-specialist/) | QA testing assistant — verify features, test endpoints, inspect logs, and document findings in Linear | 202602.21.0 |
+| [loyalty-specialist](./plugins/loyalty-specialist/) | Jeri - Generate professional PDF loyalty program performance reports by querying Metabase and analyzing program data | 202602.18.2 |
+| [bug-reporter](./plugins/bug-reporter/) | Jeri - Report bugs and customer issues to Linear through guided conversational flow with screenshots/video support | 202602.19.0 |
+| [qa-specialist](./plugins/qa-specialist/) | Jeri - QA testing assistant — verify features, test endpoints, inspect logs, and document findings in Linear | 202602.21.0 |
+| [feature-request](./plugins/feature-request/) | Jeri - Capture customer feature requests as user stories in Linear with customer association | 202602.24.0 |
 
 ## Updating
 

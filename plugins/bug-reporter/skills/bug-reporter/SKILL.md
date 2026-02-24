@@ -1,5 +1,5 @@
 ---
-name: bug-reporter
+name: Jeri - Bug Reporter
 description: >
   Use when the user wants to "report a bug", "create a bug issue", "log a customer issue",
   "report an error", "something is broken", or describes a problem that needs to be tracked.

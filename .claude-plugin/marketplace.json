@@ -5,13 +5,13 @@
   },
   "metadata": {
     "description": "Official JeriCommerce plugins for Claude Code. Loyalty programs, ecommerce analytics, and more.",
-    "version": "202602.21.0"
+    "version": "202602.24.0"
   },
   "plugins": [
     {
       "name": "loyalty-specialist",
       "source": "./plugins/loyalty-specialist",
-      "description": "Generate professional PDF loyalty program performance reports for JeriCommerce clients by querying Metabase and analyzing program data",
+      "description": "Jeri - Generate professional PDF loyalty program performance reports for JeriCommerce clients by querying Metabase and analyzing program data",
       "version": "202602.18.2",
       "author": {
         "name": "JeriCommerce"
@@ -28,7 +28,7 @@
     {
       "name": "bug-reporter",
       "source": "./plugins/bug-reporter",
-      "description": "Report bugs and customer issues to Linear through guided conversational flow with screenshots and video support",
+      "description": "Jeri - Report bugs and customer issues to Linear through guided conversational flow with screenshots and video support",
       "version": "202602.19.0",
       "author": {
         "name": "JeriCommerce"
@@ -46,7 +46,7 @@
     {
       "name": "qa-specialist",
       "source": "./plugins/qa-specialist",
-      "description": "QA testing assistant that helps verify features and bugs using the JeriCommerce API, Metabase data, and BetterStack logs, documenting findings in Linear tickets",
+      "description": "Jeri - QA testing assistant that helps verify features and bugs using the JeriCommerce API, Metabase data, and BetterStack logs, documenting findings in Linear tickets",
       "version": "202602.21.0",
       "author": {
         "name": "JeriCommerce"
@@ -61,6 +61,25 @@
         "api"
       ],
       "category": "quality-assurance"
+    },
+    {
+      "name": "feature-request",
+      "source": "./plugins/feature-request",
+      "description": "Jeri - Capture customer feature requests as user stories in Linear with customer association and detailed requirement gathering",
+      "version": "202602.24.0",
+      "author": {
+        "name": "JeriCommerce"
+      },
+      "keywords": [
+        "jericommerce",
+        "linear",
+        "feature",
+        "request",
+        "customer",
+        "user-story",
+        "product"
+      ],
+      "category": "support"
     }
   ]
 }

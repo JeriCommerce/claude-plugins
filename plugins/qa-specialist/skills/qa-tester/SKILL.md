@@ -1,5 +1,5 @@
 ---
-name: qa-tester
+name: Jeri - QA Tester
 description: >
   Use when the user wants to "test a feature", "do QA", "verify a fix", "check if something works",
   "test an endpoint", "validate a ticket", "run a test scenario", "check the logs", "investigate an issue",

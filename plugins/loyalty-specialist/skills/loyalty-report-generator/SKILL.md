@@ -1,5 +1,5 @@
 ---
-name: loyalty-report-generator
+name: Jeri - Loyalty Report Generator
 description: >
   This skill should be used when the user asks to "generate a loyalty report",
   "create a program report", "analyze a JeriCommerce program", "run a loyalty
