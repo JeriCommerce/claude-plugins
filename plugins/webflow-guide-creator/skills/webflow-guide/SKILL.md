@@ -175,9 +175,16 @@ Key points:
 - `<a href="...">` for links
 - `<p>‍</p>` for extra vertical spacing
 
-### 6. Language
+### 6. Voice & Tone
 
-All guides must be written in **English**. Technical, developer-focused tone — concise, precise, actionable.
+All guides must be written in **English**. The full voice & tone guide is in `references/article-structure.md` — read it before writing any content. Key points:
+
+- **Friendly and action-oriented** — reads like a knowledgeable colleague, not a corporate manual
+- **Imperative and direct** — lead with verbs: "Name your campaign", "Configure your settings"
+- **Short sentences, short paragraphs** — one idea per paragraph, use lists liberally
+- **Problem-solution framing** — start with the real-world need, not the feature name
+- **Empowering** — assume the reader is capable, reinforce confidence ("You're all set!")
+- **Bold UI labels** — use `<strong>` for exact UI labels, `→` for navigation paths
 
 ## Updating Existing Guides
 
