@@ -1,0 +1,17 @@
+{
+  "name": "loyalty-template-creator",
+  "description": "Jeri - Create CDN loyalty page templates for Shopify theme extensions by replicating the visual style of a reference website",
+  "version": "202603.09.0",
+  "author": {
+    "name": "JeriCommerce"
+  },
+  "keywords": [
+    "jericommerce",
+    "loyalty",
+    "template",
+    "shopify",
+    "liquid",
+    "cdn",
+    "theme-extension"
+  ]
+}
