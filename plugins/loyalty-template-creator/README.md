@@ -30,6 +30,7 @@ Ask Claude to create a loyalty page template and provide the reference URL. The 
 |-----------|------|---------|
 | Command | `/create-template` | Entry point — starts the template creation workflow |
 | Skill | `loyalty-template` | Engine docs, template structure, earning types, CTA routes, asset extraction |
+| Skill | `shopify-setup-guide` | Step-by-step guide to add a template to Shopify (CDN or theme block) |
 
 ## Workflow
 
@@ -38,3 +39,13 @@ Ask Claude to create a loyalty page template and provide the reference URL. The 
 3. **Plan template** — Present proposed palette, sections, asset mapping for user approval
 4. **Generate template** — Create a self-contained `.liquid` file following all engine rules
 5. **Verify** — Run lint and build (if in the `shopify-extensions` repo)
+
+## Shopify Setup
+
+After creating a template, ask Claude "how do I add this to Shopify?" — the `shopify-setup-guide` skill activates automatically and walks through:
+
+- Adding the section to the theme (`sections/` folder or theme editor)
+- Creating a page template (`templates/page.loyalty.json`)
+- Creating a Shopify page and adding it to navigation
+- Configuring settings and verifying the live page
+- Troubleshooting common issues
