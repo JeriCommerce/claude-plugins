@@ -6,7 +6,7 @@ description: >
   performance report", or provides a program UUID, slug, or name expecting
   a JeriCommerce loyalty program analysis. Covers the full data collection,
   analysis, and PDF report generation workflow.
-version: 202603.10.0
+version: 202603.10.1
 ---
 
 # JeriCommerce Loyalty Report Generator
