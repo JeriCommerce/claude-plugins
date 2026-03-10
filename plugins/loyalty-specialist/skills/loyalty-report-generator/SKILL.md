@@ -6,7 +6,7 @@ description: >
   performance report", or provides a program UUID, slug, or name expecting
   a JeriCommerce loyalty program analysis. Covers the full data collection,
   analysis, and PDF report generation workflow.
-version: 202602.18.2
+version: 202603.10.0
 ---
 
 # JeriCommerce Loyalty Report Generator
@@ -103,7 +103,9 @@ To determine if JeriCommerce manages loyalty for a program: check if there's a `
 
    Run ALL applicable queries before generating the report. Do NOT generate partial reports.
 
-5. **Analyze data** — Apply the heuristics from `references/report-structure.md` (use the appropriate heuristic set based on `has_jc_loyalty`). Generate actionable recommendations.
+5. **Analyze data** — Apply the heuristics from `references/report-structure.md` (use the appropriate heuristic set based on `has_jc_loyalty`). Generate actionable recommendations. If `has_jc_loyalty = true`, also generate:
+   - **Section 12: Recommended Configuration** — Compare current settings (credit rate, tier multipliers, reward costs, referral setup, flow activation, push cadence) against optimal values. Present as a parameter comparison table with rationale.
+   - **Section 13: Growth Projection** — Run a 12-month projection comparing the current trajectory (Base) against an optimized scenario applying the section 12 recommendations. Use the formulas and conservative uplifts defined in `references/report-structure.md`.
 
 6. **Generate PDF** — Read the PDF skill (`/mnt/.skills/skills/pdf/SKILL.md`) and create the report following the structure and branding in `references/report-structure.md`. Use the full or reduced report structure based on integration detection.
 

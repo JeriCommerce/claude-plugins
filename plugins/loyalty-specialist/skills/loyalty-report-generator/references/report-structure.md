@@ -245,6 +245,102 @@ Provide **5–8 actionable recommendations** grouped by priority:
 | MEMBER_GET_MEMBER active but 0 executions | Promote referral program across touchpoints |
 | CUSTOMER_SCANNED disabled | Enable to reward in-store engagement |
 
+### 12. Recommended Configuration (only if `has_jc_loyalty = true`)
+
+Present a table comparing current program settings against recommended values. Analyze the collected data to generate specific, data-backed recommendations.
+
+**Table format:**
+
+| Parameter | Current | Recommended | Rationale |
+|-----------|---------|-------------|-----------|
+
+**Parameters to analyze:**
+
+1. **Base credit rate (%)** — Calculate: spend needed to reach cheapest reward = `cheapest_reward_redeem_cost / credit_rate`. If this exceeds 2× the average order value, recommend increasing the rate. Typical range: 3–8%.
+
+2. **Tier multipliers** — If all tiers have factor = 1.0x, recommend differentiation. Guidelines:
+   - Mid-tier: 1.25–1.5x
+   - Premium tier: 1.5–2.5x
+   - Note: cost impact is minimal because higher tiers have fewer members (show the % of members in each tier)
+
+3. **Entry-level reward** — If the cheapest reward requires spending more than 1.5× the AOV, recommend adding an intermediate reward. Goal: first redemption within the first 1–3 purchases. Calculate: `spend_to_earn = redeem_cost / credit_rate`, compare to AOV.
+
+4. **Reward minimum spend thresholds** — If tier welcome rewards have low redemption (<30% claim rate), check whether `minimum_spend` exceeds 1.5× the AOV. If so, recommend reducing it.
+
+5. **Referral program** — If `referred_customers < 10`, recommend:
+   - Adding mutual point incentives (referrer + referred)
+   - Improving referral link visibility across touchpoints
+
+6. **Disabled engagement flows** — If any flows are disabled but could drive engagement (e.g., `CUSTOMER_SCANNED`, `INSTALL_WALLET_PASS`), recommend enabling them.
+
+7. **Push campaigns** — If 0 campaigns but active passes exist, recommend starting with 2–4 campaigns per month.
+
+After the table, add a brief narrative (2–3 sentences) summarizing the top 3 most impactful changes.
+
+### 13. Growth Projection — Next 12 Months (only if `has_jc_loyalty = true`)
+
+Compare a **Base** scenario (no changes) against an **Optimized** scenario (applying the recommendations from section 12).
+
+#### Base scenario calculations
+
+Use the program's current metrics directly from the collected data:
+
+```
+monthly_new_members     = new_customers_30d
+activation_rate         = unique_purchasers / total_customers
+orders_per_buyer_annual = (transactions_30d / (total_customers × activation_rate)) × 12
+avg_order_value         = avg_order_value (from Step 9)
+monthly_churn           = churn_rate_pct / 100  (if unavailable, use 0.5%)
+referrals               = 0
+push_conversions        = 0
+```
+
+#### Optimized scenario uplifts
+
+Apply these **conservative** adjustments to the base:
+
+| Metric | Uplift | Rationale |
+|--------|--------|-----------|
+| New members/month | +10% | Referral program + in-store scanning |
+| Activation rate | +30–40% relative | Lower entry reward converts more non-buyers |
+| Orders per buyer | +8–12% | Tier multipliers incentivize repeat purchases |
+| Average order value | +2–3% | Reward minimum spend thresholds nudge basket size |
+| Monthly churn | −40% | Accumulated points + tier status create switching cost |
+| Referrals | 1–2% of active buyers refer someone | Mutual incentive program |
+| Push conversions | 2–4% conversion on active passes | Regular campaign cadence |
+
+#### Monthly projection formula
+
+```
+members_start   = members_end_previous_month
+new             = monthly_new_members + (buyers_prev_month × referral_rate)  [optimized only]
+churned         = members_start × monthly_churn
+members_end     = members_start + new - churned
+buyers          = members_end × activation_rate
+orders          = buyers × (orders_per_buyer_annual / 12)
+                  + (members_end × pass_adoption × push_conversion)  [optimized only]
+revenue         = orders × avg_order_value
+```
+
+Run this formula for 12 months in each scenario.
+
+#### Output format
+
+**Summary comparison table:**
+
+| Metric | Base (12 months) | Optimized (12 months) | Difference | % Improvement |
+|--------|-----------------|----------------------|------------|---------------|
+| Members (end of year) | | | | |
+| Members lost (churn) | | | | |
+| Active buyers | | | | |
+| Total orders | | | | |
+| Total revenue | | | | |
+
+After the table, include a **conclusion paragraph** (2–3 sentences) that directly answers: "Does the optimized program generate more revenue and retain more customers?" Ground the answer in the specific numbers from the projection.
+
+**Footer note** (add at the bottom of this section):
+> *Projections are based on conservative improvements over current program metrics. Actual results may vary depending on execution and market conditions.*
+
 ---
 
 ## Report Sections — Reduced Report (`has_jc_loyalty = false`)
