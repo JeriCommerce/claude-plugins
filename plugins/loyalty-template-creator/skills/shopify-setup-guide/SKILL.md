@@ -5,7 +5,7 @@ description: >
   "install the template", "set up the loyalty page in Shopify", "how to use the template",
   "configure the loyalty page", or needs guidance on adding a CDN loyalty page template
   or the default theme app extension block to a Shopify store.
-version: 202603.09.1
+version: 202603.10.0
 ---
 
 # Shopify Loyalty Page Setup Guide

@@ -61,6 +61,140 @@ Every template follows this structure:
 11. **All CSS inline** — No external stylesheet dependency
 12. **Theme-check comments** — Wrap `<script>` and root `<div>` with `theme-check-disable/enable RemoteAsset`
 
+## Schema Rules (CRITICAL — must follow exactly)
+
+The `{% schema %}` block defines theme editor settings. Shopify validates it strictly — any violation causes a `FileSaveError` on deploy.
+
+### Setting type rules
+
+| Type | `default` allowed? | `default` format | Notes |
+|------|-------------------|------------------|-------|
+| `text` | Yes | String | `"default": "My Title"` |
+| `textarea` | Yes | String | `"default": "Some text"` |
+| `checkbox` | Yes | Boolean | `"default": true` |
+| `number` | Yes | Number | `"default": 10` |
+| `range` | Yes | Number | Must be within `min`/`max` |
+| `select` | Yes | String | Must match one of `options[].value` |
+| `color` | Yes | Hex string | `"default": "#0f0f0f"` |
+| `url` | **NO** | — | **NEVER set `default` on `url` type settings.** Use Liquid fallback instead: `{{ section.settings.guest_cta_url \| default: '/account/login' }}` |
+| `image_picker` | No | — | No default |
+| `richtext` | Yes | HTML string | `"default": "<p>Text</p>"` |
+
+### Common schema errors and how to avoid them
+
+| Error | Cause | Fix |
+|-------|-------|-----|
+| `setting with id="X" default must be a string or datasource access path` | `default` set on a `url` type setting | **Remove the `default` field entirely.** Use Liquid `\| default:` filter in the HTML instead |
+| `Invalid schema: name must be 25 characters or less` | Schema `"name"` too long | Shorten to 25 chars max |
+| `Invalid schema: presets must be an array` | Missing or malformed `presets` | Add `"presets": [{ "name": "..." }]` |
+| `Invalid schema: setting default is invalid` | `default` value doesn't match type constraints | Check type rules above |
+
+### Correct schema pattern
+
+```json
+{
+  "name": "Jeri Loyalty Brand",
+  "class": "jeri-loyalty-brand-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "Our Loyalty Program"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subtitle",
+      "label": "Hero Subtitle",
+      "default": "Join and start earning rewards today."
+    },
+    {
+      "type": "text",
+      "id": "guest_cta_text",
+      "label": "Guest CTA Text",
+      "default": "Join Now"
+    },
+    {
+      "type": "url",
+      "id": "guest_cta_url",
+      "label": "Guest CTA URL",
+      "info": "Where to redirect guests. Leave blank for /account/login"
+    },
+    {
+      "type": "header",
+      "content": "Sections"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_earning_rules",
+      "label": "Show Earnings Section",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tiers",
+      "label": "Show Tiers Section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Logged-in CTA"
+    },
+    {
+      "type": "text",
+      "id": "logged_in_cta_label",
+      "label": "Logged-in CTA Label",
+      "default": "See Rewards",
+      "info": "Opens the rewards widget when clicked."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "primary_color",
+      "label": "Primary Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#FFFF42"
+    },
+    {
+      "type": "header",
+      "content": "Advanced"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Custom CSS"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Jeri Loyalty Brand"
+    }
+  ]
+}
+```
+
+### URL fallback pattern in HTML
+
+Since `url` settings cannot have defaults, always use Liquid `| default:` in the template HTML:
+
+```liquid
+<a href="{{ section.settings.guest_cta_url | default: '/account/login' }}">
+  {{ section.settings.guest_cta_text | default: 'Join Now' }}
+</a>
+```
+
 ## BEM Naming
 
 Use a unique prefix per template in `kebab-case`:

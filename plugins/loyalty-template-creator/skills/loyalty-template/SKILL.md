@@ -5,7 +5,7 @@ description: >
   "replicate a loyalty page style", "create a Shopify loyalty template",
   "make a loyalty page template", or needs to create a new CDN loyalty page
   template for a Shopify theme extension based on a reference website.
-version: 202603.09.0
+version: 202603.10.0
 ---
 
 # Loyalty Template Creator
@@ -99,6 +99,8 @@ Also read the existing example template for reference patterns:
 - Use `Read` on the `siwon-copy.liquid` template in the `shopify-extensions` repo at `theme-extensions/loyalty-page/templates/siwon-copy.liquid` (ask the user for the path if not found)
 
 Generate a single self-contained `.liquid` file following all the rules in the reference files.
+
+**CRITICAL — Schema validation**: Pay special attention to the "Schema Rules" section in `template-structure.md`. The most common deployment failure is setting `default` on `url`-type settings — this is **forbidden** by Shopify. Use Liquid `| default:` filters in the HTML instead. Always validate the `{% schema %}` block against the type rules before writing the file.
 
 ### Step 4: Verify (if in shopify-extensions repo)
 

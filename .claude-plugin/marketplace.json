@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Official JeriCommerce plugins for Claude Code. Loyalty programs, ecommerce analytics, and more.",
-    "version": "202603.09.1"
+    "version": "202603.10.0"
   },
   "plugins": [
     {
@@ -104,7 +104,7 @@
       "name": "loyalty-template-creator",
       "source": "./plugins/loyalty-template-creator",
       "description": "Jeri - Create CDN loyalty page templates for Shopify theme extensions by replicating the visual style of a reference website",
-      "version": "202603.09.1",
+      "version": "202603.10.0",
       "author": {
         "name": "JeriCommerce"
       },
