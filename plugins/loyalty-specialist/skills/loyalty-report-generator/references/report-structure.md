@@ -62,7 +62,13 @@ WHITE      = "#FFFFFF"
 - Spacer cell: 2pt
 - Bottom cell: label in `KPILbl` style (bottomPadding=10)
 
-**KPI Strips** — Horizontal Table of N KPI cards, equal column widths (`CONTENT_W / N`), center-aligned. Use 3–4 cards per strip, stack multiple strips with 8pt spacing.
+**KPI value overflow prevention** — Long values (especially monetary amounts with European formatting like "2.142.868 EUR") will overflow fixed-width cards at 20pt. Apply these rules:
+1. **Separate value and unit**: Always render the number and the currency/unit on separate lines within the same cell. Use `<br/>` to break: `"2.142.868<br/><font size='9'>EUR</font>"`. This gives the number the full card width.
+2. **Adaptive font size**: If the formatted number (without unit) exceeds 9 characters, reduce `KPIVal` to 16pt for that card. If it exceeds 12 characters, use 14pt. Apply via inline `<font size='N'>` tag.
+3. **Abbreviate when necessary**: For values above 1 million in 4-card strips, abbreviate: `2,14M` instead of `2.142.868`. Keep full precision in the narrative text below the strip.
+4. **Prefer 3-card strips**: When values are known to be long (revenue, large counts), use 3 cards per strip instead of 4 to give each card more width.
+
+**KPI Strips** — Horizontal Table of N KPI cards, equal column widths (`CONTENT_W / N`), center-aligned. Use 3–4 cards per strip, stack multiple strips with 8pt spacing. When a strip contains monetary values or large numbers, prefer 3 cards per row.
 
 **Data Tables** — `PRIMARY` header row background with white text. Body rows alternate `WHITE` / `BG_LIGHT`. Grid: 0.4pt `BORDER`. Cell padding: 7pt header, 5pt body, 8pt left/right. `repeatRows=1`.
 
@@ -146,7 +152,7 @@ The report is written by a **JeriCommerce analyst** addressed to the **client** 
 - Confidential notice
 
 ### Executive Summary (1 page)
-- 4–8 KPI cards in strips of 4: Total Members, Active Passes, Install Rate, Total Revenue, Avg Order Value, Churn Rate (optionally: Orders 30d, Revenue 30d)
+- 6–8 KPI cards in strips of 3: Row 1 (Total Members, Active Passes, Install Rate), Row 2 (Total Revenue, Avg Order Value, Churn Rate), optionally Row 3 (Orders 30d, Revenue 30d, Revenue/Member). Monetary values must use the overflow prevention rules (separate number and currency unit, adaptive font size).
 - 2–3 sentence narrative summary of program health
 
 ### 1. Membership & Growth
@@ -168,10 +174,8 @@ The report is written by a **JeriCommerce analyst** addressed to the **client** 
 - Tier progression recommendations
 
 ### 4. Revenue Impact
-- Total attributed revenue
+- KPI strip (3 cards): Total Revenue, Avg Order Value, Revenue/Member — apply overflow prevention rules for all monetary values
 - Monthly revenue trend table
-- Average order value
-- Revenue per loyalty member
 - Transactions in last 30 days vs prior period
 
 ### 5. Engagement Flows
