@@ -5,7 +5,7 @@ description: >
   "add a guide to Webflow", "create a CMS article", "publish a guide", "update a guide",
   or needs to create or edit content in the JeriCommerce Webflow CMS Guides collection.
   Covers Webflow CMS rich text formatting, styled tables, code blocks, and article structure.
-version: 202602.26.0
+version: 202603.11.0
 ---
 
 # Webflow Guide Creator
@@ -111,6 +111,17 @@ Remind the user that they need to **publish the Webflow site** for changes to ap
 
 All guide content goes in the `content` field as HTML. Follow these rules strictly.
 
+### Global Styles
+
+All guide styling (tables, code blocks, anchors) is loaded globally via Webflow Site Settings → Custom Code. This means CMS embeds only need the HTML structure and classes — **no inline `<style>` blocks**.
+
+Global styles include:
+- `.jeri-table-container`, `.jeri-table`, `.path-badge`, `.details-text`, `.section-header` (tables)
+- `.jeri-code-block` (code blocks — light theme with syntax highlighting via highlight.js)
+- `.w-richtext h4` spacing
+- Anchor links on h2/h3 headings (auto-generated from heading text)
+- Copy button on code blocks (appears on hover)
+
 ### 1. Section Structure
 
 Use `<h3>` for main sections and `<h4>` for subsections. Never use `<h1>` or `<h2>` (reserved by the page layout).
@@ -120,18 +131,17 @@ Use `<h3>` for main sections and `<h4>` for subsections. Never use `<h1>` or `<h
 Add a visual separator between every major `<h3>` section:
 
 ```html
-<p>‍</p><hr><p>‍</p>
+<p>‍</p><p>‍</p>
 ```
 
-The `‍` is a zero-width joiner (U+200D) — it creates vertical spacing. Place this before every `<h3>` except the very first section.
+Two zero-width joiner paragraphs (U+200D) create vertical breathing room between sections. Place this before every `<h3>` except the very first section. Do NOT use `<hr>`.
 
 ### 3. Tables — Styled with `jeri-table`
 
-All tables MUST be wrapped in the embed pattern with inline CSS. Read full CSS from `references/table-css.md`.
+All tables MUST be wrapped in the embed pattern. Read full class reference from `references/table-css.md`.
 
 ```html
 <div data-rt-embed-type='true'>
-  <style>/* full jeri-table CSS */</style>
   <div class="jeri-table-container">
     <table class="jeri-table">
       <thead>...</thead>
@@ -143,18 +153,17 @@ All tables MUST be wrapped in the embed pattern with inline CSS. Read full CSS f
 
 Key points:
 - `data-rt-embed-type='true'` wrapper is **required**
-- Full `<style>` block in **every** table embed (styles are scoped)
+- Table CSS is loaded globally — do **NOT** include `<style>` blocks inside embeds
 - Use `<span class="path-badge">` for property/field names
 - Use `class="details-text"` on description `<td>` elements
 - Use `class="section-header"` on `<tr>` elements for group headers
 
 ### 4. Code Blocks — Styled with `jeri-code-block`
 
-All multi-line code blocks MUST be wrapped in the embed pattern. Read full CSS from `references/code-block-css.md`.
+All multi-line code blocks MUST be wrapped in the embed pattern. Read full reference from `references/code-block-css.md`.
 
 ```html
 <div data-rt-embed-type='true'>
-  <style>/* full jeri-code-block CSS */</style>
   <pre class="jeri-code-block">escaped code here</pre>
 </div>
 ```
@@ -162,7 +171,8 @@ All multi-line code blocks MUST be wrapped in the embed pattern. Read full CSS f
 Key points:
 - `data-rt-embed-type='true'` wrapper is **required**
 - Use `<pre class="jeri-code-block">` — NOT `<pre><code>`
-- Dark theme (`#1e1e1e` bg, `#d4d4d4` text)
+- Code block CSS is loaded globally — do **NOT** include `<style>` blocks inside embeds
+- Light theme (`#fafafa` bg). Syntax highlighting is applied automatically by highlight.js
 - Escape HTML: `&lt;` for `<`, `&gt;` for `>`, `&amp;` for `&`
 
 **Inline code** uses plain `<code>` tags — no embed wrapper needed.

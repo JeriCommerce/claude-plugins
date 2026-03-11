@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Official JeriCommerce plugins for Claude Code. Loyalty programs, ecommerce analytics, and more.",
-    "version": "202603.10.1"
+    "version": "202603.11.0"
   },
   "plugins": [
     {
@@ -85,7 +85,7 @@
       "name": "webflow-guide-creator",
       "source": "./plugins/webflow-guide-creator",
       "description": "Jeri - Create and manage support guide articles in the JeriCommerce Webflow CMS with consistent formatting, styled tables, and code blocks",
-      "version": "202602.26.0",
+      "version": "202603.11.0",
       "author": {
         "name": "JeriCommerce"
       },

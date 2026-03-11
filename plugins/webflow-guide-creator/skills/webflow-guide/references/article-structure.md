@@ -6,11 +6,11 @@ Every guide follows this HTML structure:
 
 ```html
 <p>Introductory paragraph explaining what this guide covers and who it's for.</p>
-<p>‍</p><hr><p>‍</p>
+<p>‍</p><p>‍</p>
 <h3>First Section</h3>
 <h4>Subsection Title</h4>
 <p>Content...</p>
-<p>‍</p><hr><p>‍</p>
+<p>‍</p><p>‍</p>
 <h3>Second Section</h3>
 <h4>Subsection Title</h4>
 <p>Content...</p>
@@ -22,10 +22,11 @@ Every guide follows this HTML structure:
 Between every `<h3>` section, insert:
 
 ```html
-<p>‍</p><hr><p>‍</p>
+<p>‍</p><p>‍</p>
 ```
 
-- `‍` = zero-width joiner (U+200D) — creates vertical breathing room
+- Two zero-width joiner paragraphs (U+200D) create vertical breathing room between sections
+- Do NOT use `<hr>` — separators are purely spacing-based
 - Do NOT place a separator before the very first `<h3>` if it immediately follows the intro paragraph — place it after the intro instead
 - Do NOT place a separator between an `<h4>` and its parent `<h3>` — the separator is between major sections only
 
@@ -43,10 +44,10 @@ Never use `<h1>` or `<h2>` — these are reserved by the Webflow page layout.
 
 ### Multi-line code — Styled with `jeri-code-block`
 
-All multi-line code uses the Webflow embed wrapper with custom CSS (dark theme). See `references/code-block-css.md` for full CSS.
+All multi-line code uses the Webflow embed wrapper. CSS is loaded globally — no inline `<style>` blocks. See `references/code-block-css.md` for full reference.
 
 ```html
-<div data-rt-embed-type='true'><style>.jeri-code-block{background-color:#1e1e1e;color:#d4d4d4;border-radius:12px;padding:20px 24px;overflow-x:auto;font-family:'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,Courier,monospace;font-size:13px;line-height:1.6;white-space:pre;border:1px solid rgba(143,143,143,0.15);margin:0}</style><pre class="jeri-code-block">&lt;div id="jeri-loyalty-page-root"
+<div data-rt-embed-type='true'><pre class="jeri-code-block">&lt;div id="jeri-loyalty-page-root"
   class="jeri-loyalty-page"
   data-shop="{{ shop.permanent_domain }}"&gt;
   &lt;!-- Your custom HTML here --&gt;
@@ -55,7 +56,7 @@ All multi-line code uses the Webflow embed wrapper with custom CSS (dark theme).
 
 Rules:
 - Wrap in `<div data-rt-embed-type='true'>` — same as tables
-- Include the full `<style>` block in every code embed (scoped)
+- Do **NOT** include `<style>` blocks — CSS is global
 - Use `<pre class="jeri-code-block">` — NOT `<pre><code>`
 - Escape HTML entities: `<` → `&lt;`, `>` → `&gt;`, `&` → `&amp;`
 - CSS content does NOT need escaping
@@ -146,3 +147,11 @@ The JeriCommerce guide voice is **friendly, action-oriented, and empowering** �
 - **Primary**: Merchants and their development teams setting up or managing JeriCommerce features on Shopify.
 - **Assumed knowledge**: Basic Shopify admin navigation, general understanding of loyalty programs and ecommerce concepts. Do NOT assume HTML/CSS knowledge unless the guide is specifically developer-focused (e.g., custom page templates).
 - **Varying expertise**: Offer multiple entry points when relevant ("from the onboarding flow or the JeriCommerce admin"). Mark advanced sections with "Optional Add-on" or similar headers.
+
+## Global Features (automatic)
+
+These features are applied automatically by the site's global custom code:
+- **Syntax highlighting**: highlight.js (GitHub light theme) on all `.jeri-code-block` elements
+- **Copy button**: Appears on hover over code blocks — copies content to clipboard
+- **Anchor links**: h2 and h3 headings get auto-generated IDs from their text content. Clicking copies the URL with the anchor hash.
+- **h4 spacing**: `margin-top: 1.5em` on all `.w-richtext h4`
