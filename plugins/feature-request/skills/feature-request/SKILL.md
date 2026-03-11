@@ -5,12 +5,14 @@ description: >
   "a customer wants...", "a client is asking for...", or describes a feature that a customer needs.
   Guides the user through detailed requirement gathering, associates Linear customers, and creates
   a well-structured user story issue in Linear.
-version: 202602.24.0
+version: 202603.11.0
 ---
 
 # Feature Request
 
 Guide users through capturing customer feature requests and creating well-structured Linear issues written as user stories. Associate one or more Linear customers to each request.
+
+> **CRITICAL — Language rule:** ALL content written to Linear (title, description, customer needs, labels) **MUST be in English**. This applies regardless of the language the user speaks in the conversation. The user may describe the request in Spanish, French, or any other language — you MUST translate everything to English before sending it to Linear. The conversation with the user stays in their language, but Linear content is always English. No exceptions.
 
 ## Required Tools — Linear MCP
 
@@ -129,6 +131,8 @@ Additional Context:
 
 Ask: "Does this look right? I'll create it in Linear once you confirm."
 
+**Important:** The summary shown to the user MUST already be in English (title, user story, acceptance criteria, context). If the user has been speaking in another language, translate everything now — do not wait until the Linear API call. This lets the user review the English content before it's created.
+
 Allow the user to request changes before proceeding.
 
 ### Step 5: Create the issue and associate customers
@@ -198,7 +202,7 @@ For better context when writing feature request descriptions, consult the JeriCo
 
 ## Language
 
-All content written to Linear (title, description, customer needs) **must be in English**, regardless of the language the user is speaking in the conversation. The conversation with the user can be in any language, but everything that goes into Linear is always in English.
+All content written to Linear (title, description, customer needs) **MUST be in English** — no exceptions. The user may speak any language in the conversation, but every field sent to Linear (title, description, customer need body) must be written in English. If the user provides information in another language, translate it to English before creating or updating any Linear content.
 
 ## Voice & Tone
 

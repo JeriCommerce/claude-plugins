@@ -1,7 +1,7 @@
 {
   "name": "feature-request",
   "description": "Jeri - Capture customer feature requests and create Linear issues as user stories. Guides users through detailed requirement gathering, associates Linear customers, and creates well-structured feature request issues.",
-  "version": "202602.24.0",
+  "version": "202603.11.0",
   "author": {
     "name": "JeriCommerce"
   },
