@@ -26,6 +26,7 @@ Then install individual plugins:
 | [feature-request](./plugins/feature-request/) | Jeri - Capture customer feature requests as user stories in Linear with customer association | 202603.11.0 |
 | [webflow-guide-creator](./plugins/webflow-guide-creator/) | Jeri - Create and manage support guide articles in the JeriCommerce Webflow CMS with consistent formatting | 202603.11.0 |
 | [loyalty-template-creator](./plugins/loyalty-template-creator/) | Jeri - Create CDN loyalty page templates for Shopify theme extensions by replicating a reference website's style | 202603.10.0 |
+| [niche-research](./plugins/niche-research/) | Jeri - Generate pSEO niche research reports from Ahrefs data, ready to copy into the JeriCommerce blog repo | 202603.12.0 |
 
 ## Updating
 

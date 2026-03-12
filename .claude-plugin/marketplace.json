@@ -120,6 +120,26 @@
         "deploy"
       ],
       "category": "development"
+    },
+    {
+      "name": "niche-research",
+      "source": "./plugins/niche-research",
+      "description": "Jeri - Generate pSEO niche research reports from Ahrefs data, ready to copy into the JeriCommerce blog repo",
+      "version": "202603.12.0",
+      "author": {
+        "name": "JeriCommerce"
+      },
+      "keywords": [
+        "jericommerce",
+        "pseo",
+        "niche",
+        "ahrefs",
+        "seo",
+        "taxonomy",
+        "blog",
+        "content"
+      ],
+      "category": "content"
     }
   ]
 }
