@@ -11,7 +11,7 @@ Generates pSEO niche taxonomy reports from Ahrefs data, ready to copy into the `
 
 ## What it produces
 
-1. **`{niche-slug}.json`** → `.pseo/taxonomy/` — full niche context
+1. **`{niche-slug}.json`** → `.pseo/taxonomy/` — full niche context (includes `authoritative_sources` with trusted domains for outbound links during content generation)
 2. **`_registry-update.json`** → content matrix and rollout plan
 
 ## Requirements

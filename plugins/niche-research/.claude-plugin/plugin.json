@@ -1,6 +1,6 @@
 {
   "name": "niche-research",
-  "version": "202603.12.0",
+  "version": "202603.12.1",
   "description": "Jeri - Generate pSEO niche research reports from Ahrefs data, ready to copy into the JeriCommerce blog repo",
   "author": {
     "name": "JeriCommerce"

@@ -91,6 +91,12 @@ Follow this exact structure (matches the existing `shopify-loyalty.json` format)
         }
       }
     },
+    "authoritative_sources": {
+      "industry_publications": ["Top industry media/publications for this niche"],
+      "data_sources": ["Sites with stats, reports, and research data"],
+      "competitor_blogs": ["Competitor blogs with quality content to reference"],
+      "official_resources": ["Official docs, government sites, or standards bodies"]
+    },
     "unique_considerations": [
       "5-7 things unique to this niche that content must account for"
     ]
@@ -162,6 +168,7 @@ From the keyword data, identify:
 - **Content type fit** — which of the 5 content types (resource, guide, alternatives, comparison, tool) make sense
 - **Title templates** — deterministic patterns that cover keyword clusters
 - **Page count** — how many pages per content type × subtopic
+- **Authoritative sources** — domains that appear in SERPs, competitor backlink profiles, or are recognized authorities in the niche. Categorize them into industry publications, data sources, competitor blogs, and official resources. These domains will be used during content generation to find specific reference URLs for outbound links.
 
 The golden rule: every page must target a real keyword cluster with proven volume. No speculative pages.
 
@@ -186,6 +193,7 @@ Before outputting, verify:
 - Pain points come from keyword intent, not generic assumptions
 - Competitor intel uses actual Ahrefs data, not guesses
 - The `loyalty_angle` and `shopify_relevance` fields are specific to JeriCommerce's product (wallet passes, Apple/Google Wallet, NFC, Shopify POS)
+- `authoritative_sources` contains real, active domains found in SERPs or competitor data — not generic guesses
 
 ## Using Ahrefs Tools
 
