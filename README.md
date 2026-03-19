@@ -24,7 +24,6 @@ Then install individual plugins:
 | [bug-reporter](./plugins/bug-reporter/) | Jeri - Report bugs and customer issues to Linear through guided conversational flow with screenshots/video support | 202602.19.0 |
 | [qa-specialist](./plugins/qa-specialist/) | Jeri - QA testing assistant — verify features, test endpoints, inspect logs, and document findings in Linear | 202602.21.0 |
 | [feature-request](./plugins/feature-request/) | Jeri - Capture customer feature requests as user stories in Linear with customer association | 202603.11.0 |
-| [webflow-guide-creator](./plugins/webflow-guide-creator/) | Jeri - Create and manage support guide articles in the JeriCommerce Webflow CMS with consistent formatting | 202603.11.0 |
 | [loyalty-template-creator](./plugins/loyalty-template-creator/) | Jeri - Create CDN loyalty page templates for Shopify theme extensions by replicating a reference website's style | 202603.10.0 |
 | [niche-research](./plugins/niche-research/) | Jeri - Generate pSEO niche research reports from Ahrefs data, ready to copy into the JeriCommerce blog repo | 202603.12.0 |
 
