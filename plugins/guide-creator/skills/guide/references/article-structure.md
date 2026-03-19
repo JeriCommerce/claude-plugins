@@ -134,14 +134,23 @@ Images use markdown syntax with WebP format:
 
 The JeriCommerce guide voice is **friendly, action-oriented, and empowering** — it reads like a knowledgeable colleague walking you through something, not a corporate manual.
 
+### Target audience
+
+- **Primary**: Marketing teams, store owners, and merchants — people who are smart and capable but **not developers**. This is the audience for 99% of guides.
+- **Assumed knowledge**: Basic Shopify admin navigation and general ecommerce concepts. Do NOT assume any knowledge of HTML, CSS, code, APIs, or technical tooling.
+- **Technical guides are the exception**: Only write developer-focused content (API, webhooks, custom code) when the topic explicitly requires it. In those rare cases, mark the guide clearly (e.g., "For developers" in the description) and still explain every step.
+- **Varying expertise**: Offer multiple entry points when relevant ("from the onboarding flow or the JeriCommerce admin"). Mark advanced or optional sections with headers like "Optional" or "Advanced".
+
 ### Core principles
 
-- **Conversational yet professional** — Approachable without being casual. Avoid jargon when a simpler word works, but don't shy away from technical terms when they're the right ones. Introduce new concepts with a brief definition the first time.
-- **Imperative and direct** — Lead with verbs: "Name your campaign", "Configure your store settings", "Select the audience segment". Not "You should configure..." or "The user needs to...".
+- **Conversational yet professional** — Approachable without being casual. Avoid jargon entirely when a simpler word works. When a technical term is unavoidable, define it briefly the first time ("**Earning flow** — the rule that decides how customers earn points").
+- **Imperative and direct** — Lead with verbs: "Name your campaign", "Click **Save**", "Select the audience segment". Not "You should configure..." or "The user needs to...".
 - **Short sentences, short paragraphs** — Keep sentences punchy and scannable. If a sentence runs past two lines, split it. One idea per paragraph. Use bullet lists and numbered steps liberally.
-- **Show, then tell** — Lead with what to do, then explain why if needed. Screenshots and code examples should appear right after the instruction they illustrate, not in a separate section.
-- **Empowering, not hand-holding** — Assume the reader is capable. Offer escape hatches (links to related guides, support contact) but don't over-explain basics. Phrases like "You're all set!" reinforce confidence.
-- **Problem-solution framing** — When introducing a feature, start with the real-world need it solves, not the feature name. "Plan and send wallet notifications at a specific date and time to announce offers, launches, or events" beats "Scheduled Campaigns is a feature that...".
+- **Show, then tell** — Lead with what to do, then explain why if needed. Screenshots should appear right after the instruction they illustrate, not in a separate section. A picture of the right button is worth a paragraph of instructions.
+- **Slow down on technical steps** — When something involves a setting, integration, toggle, or anything slightly technical, use `<Steps>` with screenshots. Number every click. Describe exactly what the user should see at each stage. Never say "just configure X" — show how.
+- **Empowering, never intimidating** — Assume the reader is smart but not technical. Never make them feel dumb for not knowing something. Use encouraging phrasing: "You're all set!", "That's it — your campaign is live."
+- **Problem-solution framing** — When introducing a feature, start with the real-world need it solves, not the feature name. "Reward your customers for every purchase they make" beats "Earning Flows is a feature that...".
+- **No unnecessary code** — Avoid showing code blocks, JSON, or API calls in non-developer guides. If a setting has a technical name in the UI, bold it and explain what it does in plain language.
 
 ### Language rules
 
@@ -149,11 +158,6 @@ The JeriCommerce guide voice is **friendly, action-oriented, and empowering** �
 - **Address**: Use imperative mood primarily. "You" / "your" sparingly for context ("your store", "your customers"), never "we" when referring to the reader.
 - **JeriCommerce voice**: "we" is acceptable when speaking as JeriCommerce ("One of JeriCommerce's missions is to simplify..."). This creates a collaborative, partner-like feel.
 - **Labels and UI references**: Bold the exact UI label — **Earning Flows**, **Wallet Pass Design**. Use `→` for navigation paths: "JeriCommerce → Loyalty → Rewards" or "Shopify Admin → Online Store → Pages".
-- **Notes and warnings**: Use `<Note>`, `<Warning>`, `<Tip>`, or `<Info>` callout components. Avoid ALL CAPS or alarm language.
+- **Notes and warnings**: Use `<Note>`, `<Warning>`, `<Tip>`, or `<Info>` callout components. Avoid ALL CAPS or alarm language. Use `<Tip>` generously to share best practices in plain language.
 - **Closing a guide**: End with a brief, encouraging wrap-up. A single line like "You're all set!" or "Your campaign is ready to go." works well.
-
-### Audience
-
-- **Primary**: Merchants and their development teams setting up or managing JeriCommerce features on Shopify.
-- **Assumed knowledge**: Basic Shopify admin navigation, general understanding of loyalty programs and ecommerce concepts. Do NOT assume HTML/CSS knowledge unless the guide is specifically developer-focused (e.g., custom page templates).
-- **Varying expertise**: Offer multiple entry points when relevant ("from the onboarding flow or the JeriCommerce admin"). Mark advanced sections with "Optional Add-on" or similar headers.
+- **Avoid developer language**: Don't say "configure", "implement", "deploy", "parameter", "endpoint", "payload" in non-dev guides. Say "set up", "turn on", "choose", "option", "setting" instead.

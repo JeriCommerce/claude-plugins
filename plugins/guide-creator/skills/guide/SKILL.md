@@ -249,14 +249,17 @@ Use `---` to create a visual separator between major sections.
 
 All guides must be written in **English**. Read the full voice and tone guide in `${CLAUDE_PLUGIN_ROOT}/skills/guide/references/article-structure.md`. Key points:
 
-- **Friendly and action-oriented** — reads like a knowledgeable colleague, not a corporate manual
-- **Imperative and direct** — lead with verbs: "Name your campaign", "Configure your settings"
-- **Short sentences, short paragraphs** — one idea per paragraph, use lists liberally
-- **Problem-solution framing** — start with the real-world need, not the feature name
-- **Empowering** — assume the reader is capable, reinforce confidence ("You're all set!")
+- **Target reader: marketing people and merchants** — 99% of guides are for non-technical users. Never assume development knowledge. Avoid code, API references, or technical jargon unless the guide is explicitly developer-focused.
+- **Friendly and action-oriented** — reads like a knowledgeable colleague walking you through it, not a manual
+- **Imperative and direct** — lead with verbs: "Name your campaign", "Click **Save**"
+- **Extra careful on technical steps** — when something involves a setting, integration, or anything slightly technical, slow down. Use `<Steps>` with screenshots, number every click, describe exactly what the user should see at each stage.
+- **Short sentences, short paragraphs** — one idea per paragraph, use lists and screenshots liberally
+- **Problem-solution framing** — start with the real-world need ("Reward your customers for every purchase") not the feature name ("Earning Flows is a feature that...")
+- **Empowering, never intimidating** — assume the reader is smart but not technical. Reinforce confidence ("You're all set!")
 - **Bold UI labels** — use `**Label**` for exact UI labels, `→` for navigation paths
 - **Language**: English only
 - **JeriCommerce voice**: "we" is acceptable when speaking as JeriCommerce. Never "we" for the reader.
+- **When in doubt, show a screenshot** — a picture of the right button is worth a paragraph of instructions
 
 ## Workflow
 
@@ -264,9 +267,10 @@ All guides must be written in **English**. Read the full voice and tone guide in
 
 Ask the user for:
 1. **Topic** — What should the guide cover?
-2. **Target audience** — Merchants, developers, both?
-3. **Category and tags** — Which content category and tags to assign (show available options)
-4. **Source material** — Is there a README, docs, or other source to base the content on?
+2. **Category and tags** — Which content category and tags to assign (show available options)
+3. **Source material** — Is there a README, docs, or other source to base the content on?
+
+The default audience is **merchants and marketing teams** — non-technical users. Only ask about technical audience if the topic is explicitly developer-focused (API, webhooks, custom code).
 
 ### Step 2: Draft the markdown content
 
