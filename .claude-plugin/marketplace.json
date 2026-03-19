@@ -82,25 +82,6 @@
       "category": "support"
     },
     {
-      "name": "webflow-guide-creator",
-      "source": "./plugins/webflow-guide-creator",
-      "description": "Jeri - Create and manage support guide articles in the JeriCommerce Webflow CMS with consistent formatting, styled tables, and code blocks",
-      "version": "202603.11.0",
-      "author": {
-        "name": "JeriCommerce"
-      },
-      "keywords": [
-        "jericommerce",
-        "webflow",
-        "cms",
-        "guide",
-        "support",
-        "article",
-        "documentation"
-      ],
-      "category": "content"
-    },
-    {
       "name": "loyalty-template-creator",
       "source": "./plugins/loyalty-template-creator",
       "description": "Jeri - Create CDN loyalty page templates for Shopify theme extensions by replicating the visual style of a reference website",
