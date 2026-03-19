@@ -1,0 +1,17 @@
+{
+  "name": "guide-creator",
+  "description": "Jeri - Create and manage support guide articles as markdown files for the JeriCommerce static docs site with consistent formatting and components",
+  "version": "202603.19.0",
+  "author": {
+    "name": "JeriCommerce"
+  },
+  "keywords": [
+    "jericommerce",
+    "guide",
+    "support",
+    "article",
+    "documentation",
+    "markdown",
+    "static-site"
+  ]
+}
