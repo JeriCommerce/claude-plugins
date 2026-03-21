@@ -7,203 +7,46 @@ description: "Generate a pSEO niche research report from Ahrefs data, ready to c
 
 Generate structured niche taxonomy files from Ahrefs research data, formatted exactly for the JeriCommerce blog pSEO system (`blog.jericommerce.com`).
 
-## What This Skill Produces
+## Workflow
 
-Two ready-to-paste files for the blog repo:
+### Step 1: Gather input data
 
-1. **`{niche-slug}.json`** → goes in `.pseo/taxonomy/` — full niche context (audience, pain points, industries, SEO landscape, content strategy)
-2. **`_registry-update.json`** → content matrix and rollout plan to merge into `.pseo/taxonomy/_registry.json`
+Read `${CLAUDE_PLUGIN_ROOT}/skills/niche-research/references/input-requirements.md` for what data is needed.
 
-## Input: What You Need From the User
+Collect the required data from the user. If data is incomplete, use Ahrefs MCP tools to fill gaps.
 
-The user provides Ahrefs data in any format (tables, CSV, screenshots, pasted text). Extract these data points:
+### Step 2: Check Ahrefs tools (if needed)
 
-### Required
-- **Keyword list** with volume, KD, CPC (at minimum the top 20-30 keywords)
-- **Target niche/topic** (what the blog will cover)
+Read `${CLAUDE_PLUGIN_ROOT}/skills/niche-research/references/ahrefs-tools.md` for available Ahrefs MCP tools and usage patterns.
 
-### Helpful but Optional
-- Competitor domains with DR, traffic, keyword counts
-- Content gap analysis
-- Top-performing pages from competitors
-- SERP overview for key terms
+Use these tools to supplement missing data points.
 
-If the user provides a CSV file, read it directly. If they paste a table, parse it. If data is incomplete, use Ahrefs MCP tools to fill gaps (keywords-explorer-overview, site-explorer-organic-competitors, site-explorer-organic-keywords).
+### Step 3: Parse and analyze
 
-## Output Format
+Read `${CLAUDE_PLUGIN_ROOT}/skills/niche-research/references/process.md` for the 4-step analysis process.
 
-### File 1: `{niche-slug}.json`
+Follow the process to parse input data, identify structure (subtopics, content types, title templates, page counts, authoritative sources).
 
-Follow this exact structure (matches the existing `shopify-loyalty.json` format):
+### Step 4: Generate output files
 
-```json
-{
-  "slug": "{niche-slug}",
-  "name": "{Niche Display Name}",
-  "status": "validated",
-  "context": {
-    "audience": {
-      "primary": "...",
-      "secondary": "...",
-      "demographics": "...",
-      "psychographics": "..."
-    },
-    "pain_points": [
-      "10 specific pain points backed by the keyword data"
-    ],
-    "monetization": {
-      "primary": ["How JeriCommerce monetizes in this niche"],
-      "secondary": ["..."],
-      "business_model": "..."
-    },
-    "content_that_works": {
-      "formats": ["7-10 content formats derived from competitor analysis"],
-      "high_performing_angles": ["5-7 angles based on top-ranking content"],
-      "content_gaps": "What nobody is covering (derived from Ahrefs data)"
-    },
-    "subtopics": [
-      {
-        "slug": "subtopic-slug",
-        "name": "Subtopic Display Name",
-        "specifics": "What makes this subtopic unique",
-        "loyalty_angle": "How JeriCommerce wallet passes apply here",
-        "shopify_relevance": "Why this matters for Shopify merchants"
-      }
-    ],
-    "seo_landscape": {
-      "competition_level": "low|medium|high (based on avg KD)",
-      "long_tail_opportunity": "assessment based on keyword data",
-      "seasonal_patterns": "any patterns visible in the data",
-      "serp_features": "what dominates SERPs for key terms",
-      "current_jericommerce_position": {
-        "organic_keywords": 0,
-        "organic_traffic": 0,
-        "top_performing_content": "none yet",
-        "traffic_value": "$0",
-        "key_gap": "describe the opportunity"
-      },
-      "competitor_intel": {
-        "competitor_slug": {
-          "traffic": 0,
-          "dr": 0,
-          "strategy": "their content approach",
-          "top_page": "their best performing page"
-        }
-      }
-    },
-    "authoritative_sources": {
-      "industry_publications": ["Top industry media/publications for this niche"],
-      "data_sources": ["Sites with stats, reports, and research data"],
-      "competitor_blogs": ["Competitor blogs with quality content to reference"],
-      "official_resources": ["Official docs, government sites, or standards bodies"]
-    },
-    "unique_considerations": [
-      "5-7 things unique to this niche that content must account for"
-    ]
-  },
-  "content_categories": {
-    "enabled": ["resources", "guides", "alternatives", "comparisons", "tools"],
-    "disabled_reason": {}
-  },
-  "generation_notes": {
-    "tone": "...",
-    "avoid": ["4-5 things to avoid"],
-    "emphasize": ["5-7 things to emphasize"],
-    "cta_strategy": "..."
-  }
-}
-```
+Read `${CLAUDE_PLUGIN_ROOT}/skills/niche-research/references/output-format.md` for the exact JSON structures.
 
-### File 2: `_registry-update.json`
+Generate both files (`{niche-slug}.json` and `_registry-update.json`) following the schemas exactly.
 
-Content matrix with page counts, title templates, slug patterns, and rollout batches:
+### Step 5: Quality checks
 
-```json
-{
-  "niche_entry": {
-    "slug": "{niche-slug}",
-    "name": "{Niche Display Name}",
-    "status": "validated",
-    "content_types_enabled": 5,
-    "estimated_pages": 0,
-    "last_updated": "YYYY-MM-DD",
-    "notes": "One-line summary from keyword data"
-  },
-  "content_matrix": {
-    "resources": {
-      "subtypes": [
-        {
-          "template": "Title template with {industry} and {year} placeholders",
-          "slug_pattern": "slug-pattern-{industry}",
-          "industries": 0,
-          "pages": 0
-        }
-      ],
-      "total_pages": 0
-    },
-    "guides": { "subtypes": [], "total_pages": 0 },
-    "alternatives": { "subtypes": [], "total_pages": 0 },
-    "comparisons": { "subtypes": [], "total_pages": 0 },
-    "tools": { "subtypes": [], "total_pages": 0 }
-  },
-  "rollout_batches": [
-    { "batch": 1, "pages": 0, "focus": "...", "timeline": "Week 1-2" }
-  ]
-}
-```
+Read `${CLAUDE_PLUGIN_ROOT}/skills/niche-research/references/quality-checks.md` for validation rules.
 
-## Process
+Verify all checks pass before presenting output to the user.
 
-### Step 1: Parse Input Data
+### Step 6: Present results
 
-Read whatever the user provided. Extract into structured tables:
-- Keywords: term, volume, KD, CPC, intent
-- Competitors: domain, DR, traffic, keywords, overlap %
-- Content gaps: topics with volume but no good coverage
+Present both JSON files as code blocks the user can copy into the repo. End with the summary (total pages, search volume, top keywords, Batch 1 focus).
 
-### Step 2: Analyze & Identify Structure
+## Reference Files
 
-From the keyword data, identify:
-- **Subtopics/verticals** — natural clusters in the keywords (these become the `subtopics` array)
-- **Content type fit** — which of the 5 content types (resource, guide, alternatives, comparison, tool) make sense
-- **Title templates** — deterministic patterns that cover keyword clusters
-- **Page count** — how many pages per content type × subtopic
-- **Authoritative sources** — domains that appear in SERPs, competitor backlink profiles, or are recognized authorities in the niche. Categorize them into industry publications, data sources, competitor blogs, and official resources. These domains will be used during content generation to find specific reference URLs for outbound links.
-
-The golden rule: every page must target a real keyword cluster with proven volume. No speculative pages.
-
-### Step 3: Generate Both Files
-
-Write the two JSON files. Present them to the user as code blocks they can copy into the repo.
-
-### Step 4: Summary
-
-End with a brief summary:
-- Total pages planned
-- Estimated monthly search volume addressable
-- Top 3 highest-opportunity keywords
-- Recommended Batch 1 focus
-
-## Quality Checks
-
-Before outputting, verify:
-- Every `subtopic` maps to real keywords from the input data
-- Page count estimates are realistic (not inflated)
-- Title templates produce titles that match actual search queries
-- Pain points come from keyword intent, not generic assumptions
-- Competitor intel uses actual Ahrefs data, not guesses
-- The `loyalty_angle` and `shopify_relevance` fields are specific to JeriCommerce's product (wallet passes, Apple/Google Wallet, NFC, Shopify POS)
-- `authoritative_sources` contains real, active domains found in SERPs or competitor data — not generic guesses
-
-## Using Ahrefs Tools
-
-If the user's data is incomplete, you have access to Ahrefs MCP tools. Useful ones:
-
-- `keywords-explorer-overview` — Get volume, KD, CPC for specific keywords
-- `keywords-explorer-matching-terms` — Find related keywords
-- `site-explorer-organic-competitors` — Find who competes in this space
-- `site-explorer-organic-keywords` — See what competitors rank for
-- `site-explorer-metrics` — Get DR, traffic for a domain
-- `serp-overview` — See who ranks for a specific keyword
-
-Always use `mode=subdomains` when analyzing domains. Check the `doc` tool first if you're unsure about parameters.
+- `references/input-requirements.md` — Required and optional input data from the user
+- `references/output-format.md` — JSON structures for both output files
+- `references/process.md` — 4-step analysis process (parse, analyze, generate, summarize)
+- `references/quality-checks.md` — Validation rules before delivering output
+- `references/ahrefs-tools.md` — Available Ahrefs MCP tools and usage patterns
