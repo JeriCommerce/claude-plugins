@@ -12,40 +12,19 @@ version: 202603.11.0
 
 Guide users through capturing customer feature requests and creating well-structured Linear issues written as user stories. Associate one or more Linear customers to each request.
 
-> **CRITICAL — Language rule:** ALL content written to Linear (title, description, customer needs, labels) **MUST be in English**. This applies regardless of the language the user speaks in the conversation. The user may describe the request in Spanish, French, or any other language — you MUST translate everything to English before sending it to Linear. The conversation with the user stays in their language, but Linear content is always English. No exceptions.
-
-## Required Tools — Linear MCP
-
-**All operations MUST go through the Linear MCP tools**, never the Linear API directly.
-
-Available Linear tools:
-
-| Tool | Purpose |
-|------|---------|
-| `mcp__linear__create_issue` | Create a new feature request issue |
-| `mcp__linear__list_issues` | Check for duplicate or related requests |
-| `mcp__linear__list_teams` | List teams |
-| `mcp__linear__list_projects` | List projects |
-| `mcp__linear__list_issue_labels` | List available labels |
-| `mcp__linear__list_customers` | Search for existing customers |
-| `mcp__linear__save_customer` | Create a new customer |
-| `mcp__linear__save_customer_need` | Associate a customer need to an issue |
-
-If the Linear MCP tools are not available, inform the user that the Linear MCP server must be configured.
-
-## Target Project
-
-All feature requests go to:
-
-- **Team**: Development
-- **Project**: Feature Requests
-- **Label**: `feature-request`
-
-> If the "Feature Requests" project does not exist, create the issue in team "Development" without a project and inform the user.
-
 ## Workflow
 
-### Step 1: Understand the request
+### Step 1: Check tool availability
+
+Read `${CLAUDE_PLUGIN_ROOT}/skills/feature-request/references/tools.md` for required Linear MCP tools and the target project.
+
+If the Linear MCP tools are unavailable, inform the user and stop.
+
+### Step 2: Load communication guidelines
+
+Read `${CLAUDE_PLUGIN_ROOT}/skills/feature-request/references/voice-tone.md` for communication style and language rules. Apply throughout the conversation.
+
+### Step 3: Understand the request
 
 Ask the user to describe what the customer wants. Then ask **follow-up questions one at a time** to fully understand the request. Adapt your questions based on their answers — don't follow a rigid script.
 
@@ -61,11 +40,11 @@ Key questions to explore (not necessarily in this order):
 6. **What's the priority for the customer?** — Is this critical for their business, a nice-to-have, or somewhere in between?
 7. **Any constraints or context?** — Deadlines, dependencies on other features, regulatory requirements, etc.
 
-**Important:** Keep probing until the request is specific and actionable. Vague requests like "improve the dashboard" need to be narrowed down to something concrete. Ask "Can you give me an example?" or "What specifically would you want to see?" to get clarity.
+**Important:** Keep probing until the request is specific and actionable. Vague requests like "improve the dashboard" need to be narrowed down to something concrete.
 
-### Step 2: Identify the customer(s)
+### Step 4: Identify the customer(s)
 
-After understanding the request, ask the user to identify the customer(s) making this request.
+Ask the user to identify the customer(s) making this request.
 
 **Always ask:** "Do you know the customer's name or slug so I can look them up in Linear?"
 
@@ -76,139 +55,31 @@ For **each** customer:
 3. **If not found** — Ask the user: "I didn't find [name] in Linear. Would you like me to create them as a new customer?" If yes, use `mcp__linear__save_customer` with the customer name.
 4. **Multiple customers** — Ask: "Are there other customers requesting this as well?" Repeat the search/create flow for each one.
 
-Collect all customer IDs for Step 5.
+Collect all customer IDs for Step 7.
 
-### Step 3: Classify the request
+### Step 5: Classify the request
 
-Based on the gathered information, determine:
+Read `${CLAUDE_PLUGIN_ROOT}/skills/feature-request/references/classification.md` for priority levels and area labels.
 
-**Priority:**
+Determine priority and applicable labels based on the gathered information.
 
-| Priority | Criteria |
-|----------|----------|
-| Urgent | Critical for customer retention, contractual obligation, blocking a major deal |
-| High | Highly requested by multiple customers, significant business impact |
-| Normal | Valuable improvement, requested by one or a few customers |
-| Low | Nice-to-have, minor enhancement, no immediate business pressure |
+### Step 6: Confirm with the user
 
-**Labels** — Apply `feature-request` plus one or more area labels:
+Read `${CLAUDE_PLUGIN_ROOT}/skills/feature-request/references/templates.md` for the confirmation summary format.
 
-| Label | What it covers |
-|-------|---------------|
-| `feature-request` | Always applied |
-| `admin` | Embedded Shopify app where the merchant configures their loyalty program, rewards, campaigns, etc. |
-| `backend` | API, server, data model, webhooks, integrations |
-| `customer-app` | End-customer facing app where merchants' customers manage their points, rewards, referrals, profile |
-| `extensions` | Shopify extensions (theme app extensions, checkout extensions, script tags) |
+Show the summary and ask for confirmation. Allow changes before proceeding.
 
-If unsure which area, ask: "Would this be something in the merchant's Shopify admin (admin), the customer-facing app (customer-app), the server/API (backend), or a Shopify extension?"
+### Step 7: Create the issue and associate customers
 
-### Step 4: Confirm with the user
+Read `${CLAUDE_PLUGIN_ROOT}/skills/feature-request/references/templates.md` for issue description template, Linear parameters, and customer need association.
 
-Before creating the issue, show a summary:
+1. Create the issue using the tools from Step 1
+2. Associate each customer using `mcp__linear__save_customer_need`
+3. Share the Linear issue URL
 
-```
-📋 Feature Request Summary
+## Reference Files
 
-Title: [concise title]
-Priority: [Urgent/High/Normal/Low]
-Labels: [feature-request, area-label]
-Customer(s): [Customer 1, Customer 2, ...]
-
-User Story:
-As a [type of user],
-I want [what they want],
-so that [why — the benefit/goal].
-
-Acceptance Criteria:
-- [ ] Criterion 1
-- [ ] Criterion 2
-- [ ] ...
-
-Additional Context:
-[any extra details, examples, constraints]
-```
-
-Ask: "Does this look right? I'll create it in Linear once you confirm."
-
-**Important:** The summary shown to the user MUST already be in English (title, user story, acceptance criteria, context). If the user has been speaking in another language, translate everything now — do not wait until the Linear API call. This lets the user review the English content before it's created.
-
-Allow the user to request changes before proceeding.
-
-### Step 5: Create the issue and associate customers
-
-#### 5a. Create the issue
-
-Use `mcp__linear__create_issue` with these parameters:
-
-- **team**: "Development"
-- **project**: "Feature Requests"
-- **title**: Concise, descriptive title (max ~80 chars)
-- **priority**: 1 (Urgent), 2 (High), 3 (Normal), or 4 (Low)
-- **labels**: `["feature-request", ...area labels]`
-- **description**: Structured markdown in user story format (see template below)
-
-#### 5b. Associate customer needs
-
-For **each** customer identified in Step 2, use `mcp__linear__save_customer_need` with:
-
-- **body**: A brief summary of what this specific customer needs (can be tailored per customer if their needs differ slightly)
-- **customer**: The customer ID or name
-- **issue**: The issue ID returned from Step 5a
-- **priority**: 1 if the customer marked it as important, 0 otherwise
-
-### Issue Description Template
-
-```markdown
-## Feature Request
-
-**Requested by:** {customer name(s)}
-**Date:** {today's date}
-
----
-
-### User Story
-
-**As a** {type of user — e.g., "merchant using the loyalty program", "end customer of a rewards program"},
-**I want** {clear description of the desired feature or change},
-**so that** {the benefit or goal this achieves}.
-
-### Context & Motivation
-
-{Why is this being requested? What problem does it solve? What's the current pain point or limitation?}
-
-### Acceptance Criteria
-
-- [ ] {Specific, testable criterion 1}
-- [ ] {Specific, testable criterion 2}
-- [ ] {Specific, testable criterion 3}
-
-### Examples / References
-
-{Any examples the customer provided, screenshots, links to similar features in other products, or mockup descriptions}
-
-### Additional Notes
-
-{Constraints, deadlines, dependencies, or anything else relevant}
-```
-
-## Product Context
-
-For better context when writing feature request descriptions, consult the JeriCommerce support documentation at https://jericommerce.com/support. This helps you:
-
-- Use the correct product terminology
-- Understand existing features and how they work
-- Write user stories that align with the product's domain language
-
-## Language
-
-All content written to Linear (title, description, customer needs) **MUST be in English** — no exceptions. The user may speak any language in the conversation, but every field sent to Linear (title, description, customer need body) must be written in English. If the user provides information in another language, translate it to English before creating or updating any Linear content.
-
-## Voice & Tone
-
-- Be curious and thorough — the goal is to capture the request so well that anyone reading it understands exactly what the customer wants
-- Ask clarifying questions naturally, like a product manager would in a discovery call
-- Don't assume the technical solution — focus on the **what** and **why**, not the **how**
-- If the user gives a vague request, don't accept it as-is — probe deeper
-- Be patient with follow-ups — a well-written request saves time later
-- After creation, share the Linear issue URL so they can track it
+- `references/tools.md` — Linear MCP tools and target project
+- `references/classification.md` — Priority levels and area labels
+- `references/templates.md` — Confirmation summary, issue description template, and customer need association
+- `references/voice-tone.md` — Voice, tone, language rules, and product context

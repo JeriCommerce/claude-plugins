@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Official JeriCommerce plugins for Claude Code. Loyalty programs, ecommerce analytics, and more.",
-    "version": "202603.11.0"
+    "version": "202603.21.0"
   },
   "plugins": [
     {
@@ -121,6 +121,25 @@
         "content"
       ],
       "category": "content"
+    },
+    {
+      "name": "optimize-skills",
+      "source": "./plugins/optimize-skills",
+      "description": "Audit and restructure Claude Code skills into modular folder structures for better consistency and maintainability",
+      "version": "202603.21.0",
+      "author": {
+        "name": "JeriCommerce"
+      },
+      "keywords": [
+        "skills",
+        "optimization",
+        "restructure",
+        "audit",
+        "modular",
+        "refactor",
+        "consistency"
+      ],
+      "category": "development"
     }
   ]
 }

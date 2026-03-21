@@ -1,0 +1,17 @@
+{
+  "name": "optimize-skills",
+  "description": "Audit and restructure Claude Code skills into modular folder structures for better consistency and maintainability",
+  "version": "202603.21.0",
+  "author": {
+    "name": "JeriCommerce"
+  },
+  "keywords": [
+    "skills",
+    "optimization",
+    "restructure",
+    "audit",
+    "modular",
+    "refactor",
+    "consistency"
+  ]
+}
