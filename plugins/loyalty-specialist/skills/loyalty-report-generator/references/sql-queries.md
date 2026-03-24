@@ -2,6 +2,21 @@
 
 Execute these queries **in order**, using the program UUID obtained in Step 1. Run all queries before generating the report.
 
+## Execution Decision Tree
+
+After resolving feature IDs (Step 1.5) and detecting integrations (Step 1.6), use this decision tree:
+
+**Always run:** Steps 2–6, 13–16 (subscription, membership, passes, origin, campaigns, events, web visits, referrals)
+
+**Only if `has_jc_loyalty = true`:** Steps 7–11 (balances, tiers, revenue, monthly trend, engagement flows)
+
+**Only if `has_jc_rewards = true`:** Step 12 (rewards catalog & redemption)
+
+| Condition | Skip report sections | Skip queries |
+|-----------|---------------------|--------------|
+| `has_jc_loyalty = false` | Loyalty Economics, Revenue Impact, Engagement Flows | Steps 7, 8, 9, 10, 11 |
+| `has_jc_rewards = false` | Rewards & Redemption | Step 12 |
+
 ## Step 1: Program Identity
 
 ```sql
