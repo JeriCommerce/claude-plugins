@@ -37,9 +37,9 @@ This skill uses built-in tools only:
 
 Then fetch the latest docs from these two canonical sources using `WebFetch`:
 
-1. **Template engine docs**: `https://www.jericommerce.com/guides/loyalty-page-building-custom-templates-with-cdn-scripts`
+1. **Template engine docs**: `https://support.jericommerce.com/storefront/loyalty-page-building-custom-templates-with-cdn-scripts/`
    - Covers: root element, data attributes, variable interpolation, earning/tier fields, loading states, section structure, icon system, CSS classes
-2. **Widget routes docs**: `https://www.jericommerce.com/guides/how-to-use-the-jericommerce-storefront-widget`
+2. **Widget routes docs**: `https://support.jericommerce.com/storefront/loyalty-page-setting-up-and-customizing-the-default-template/`
    - Covers: all `#jeri=` hash fragment routes for CTAs
 
 These docs are the **canonical reference**. If anything in this skill conflicts with the live docs, **the docs win**.
