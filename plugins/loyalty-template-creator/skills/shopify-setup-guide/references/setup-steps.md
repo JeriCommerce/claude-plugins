@@ -123,6 +123,39 @@ Open the page URL in an incognito window to verify:
 https://{store-name}.myshopify.com/pages/{page-handle}
 ```
 
+## Theme App Extension Block Setup
+
+For stores using the default JeriCommerce loyalty page (no custom template):
+
+1. **Create a page** — Shopify Admin → Online Store → Pages → Add page
+2. **Open theme editor** — Customize → Pages → select the page
+3. **Add the block** — Click "Add block" → find "JeriCommerce Loyalty Page" under Apps
+4. **Configure settings** — Adjust titles, colors, CTA behavior, section visibility
+5. **Save and publish**
+
+## Verification Checklist
+
+After setup, walk through this checklist:
+
+- [ ] Page loads without errors (check browser console)
+- [ ] Earning rules appear (purchases, social, referral, etc.)
+- [ ] Tier cards display correctly (if program has tiers)
+- [ ] CTA button works for both guest and logged-in states
+- [ ] Mobile layout is responsive
+- [ ] Loading skeleton shows briefly before data loads
+- [ ] Widget routes work (`#jeri=loyalty/rewards` opens the widget)
+
+### Quick Troubleshooting Table
+
+| Issue | Cause | Fix |
+|-------|-------|-----|
+| Blank page, no content | JS not loading | Check CDN script URL, ensure `defer` attribute is present |
+| "Section not found" error | Template name mismatch | Verify the section name in `page.loyalty.json` matches the `.liquid` filename |
+| Earnings/tiers not showing | Wrong `data-shop` value | Ensure `data-shop="{{ shop.permanent_domain }}"` is set correctly |
+| CTA opens nothing | Widget not installed | The JeriCommerce widget must be active on the storefront for `#jeri=` routes to work |
+| Styles look wrong | CSS not inline | CDN templates must include all CSS inline — no external stylesheet dependency |
+| Theme check warnings | RemoteAsset errors | Wrap `<script>` and root `<div>` with `theme-check-disable/enable RemoteAsset` comments |
+
 ## Alternative: Theme Editor Setup (Add Section)
 
 If the template includes a `"presets"` array in its `{% schema %}`, the user can also add it via the theme editor without creating a JSON template:
