@@ -27,6 +27,7 @@ Then install individual plugins:
 | [loyalty-template-creator](./plugins/loyalty-template-creator/) | Jeri - Create CDN loyalty page templates for Shopify theme extensions by replicating a reference website's style | 202603.10.0 |
 | [niche-research](./plugins/niche-research/) | Jeri - Generate pSEO niche research reports from Ahrefs data, ready to copy into the JeriCommerce blog repo | 202603.12.0 |
 | [optimize-skills](./plugins/optimize-skills/) | Audit and restructure Claude Code skills into modular folder structures for better consistency and maintainability | 202603.21.0 |
+| [communication](./plugins/communication/) | Jeri - On-brand content creation: marketing copy, cold emails, social posts, VoC research. EN/ES/IT | 202603.30.0 |
 
 ## Updating
 

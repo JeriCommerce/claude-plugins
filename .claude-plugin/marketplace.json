@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Official JeriCommerce plugins for Claude Code. Loyalty programs, ecommerce analytics, and more.",
-    "version": "202603.21.0"
+    "version": "202603.30.0"
   },
   "plugins": [
     {
@@ -140,6 +140,27 @@
         "consistency"
       ],
       "category": "development"
+    },
+    {
+      "name": "communication",
+      "source": "./plugins/communication",
+      "description": "Jeri - Create on-brand content for JeriCommerce across all channels: marketing copy, cold emails, social posts, and VoC research. Supports EN/ES/IT.",
+      "version": "202603.30.0",
+      "author": {
+        "name": "JeriCommerce"
+      },
+      "keywords": [
+        "jericommerce",
+        "copywriting",
+        "cold-email",
+        "social-content",
+        "voc-research",
+        "marketing",
+        "linkedin",
+        "loyalty",
+        "content"
+      ],
+      "category": "marketing"
     }
   ]
 }
