@@ -6,7 +6,7 @@ description: >
   Also use when the user says "write copy for," "improve this copy," "rewrite this page,"
   "headline help," "CTA copy," "value proposition," or "help me describe JeriCommerce."
   For cold outreach emails, see cold-email. For social posts, see social-content.
-version: 202603.30.0
+version: 202603.31.0
 ---
 
 # JeriCommerce Copywriting
