@@ -6,7 +6,7 @@ description: >
   Also use when the user says "write copy for," "improve this copy," "rewrite this page,"
   "headline help," "CTA copy," "value proposition," or "help me describe JeriCommerce."
   For cold outreach emails, see cold-email. For social posts, see social-content.
-version: 202603.30.0
+version: 202603.31.0
 ---
 
 # JeriCommerce Copywriting
@@ -46,7 +46,12 @@ Use real metrics: "90% push open rate vs. 2% for email", "15-second enrollment",
 ### One Idea Per Section
 Each section advances one argument. Build a logical flow down the page.
 
+### Never Fabricate Facts
+Only state facts that appear in the reference docs (brand-guide.md, product-context.md). Never invent team size, team location, founding date, investor names, revenue figures, customer counts beyond what's documented, or any other detail not explicitly provided. If a section would benefit from a fact you don't have, leave a placeholder like `[TEAM DETAIL]` and ask the user to fill it in.
+
 ## Page Structure Framework
+
+For tone, pain framing, and CTA intensity by page type, see `references/tone-calibration.md`.
 
 ### Above the Fold
 - **Headline**: Single most important message. Outcome-focused. Use brand pillar angles.
@@ -96,6 +101,8 @@ Before presenting copy:
 - [ ] Customer language mirrored from VoC
 - [ ] Soft CTAs (no hard sell)
 - [ ] Correct language (en/es/it as requested)
+- [ ] Tone matches page type (see references/tone-calibration.md)
+- [ ] No fabricated facts — every claim traceable to reference docs
 
 ## Output Format
 
