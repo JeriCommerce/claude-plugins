@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Official JeriCommerce plugins for Claude Code. Loyalty programs, ecommerce analytics, and more.",
-    "version": "202603.30.0"
+    "version": "202604.08.0"
   },
   "plugins": [
     {
@@ -161,6 +161,26 @@
         "content"
       ],
       "category": "marketing"
+    },
+    {
+      "name": "program-autopsy",
+      "source": "./plugins/program-autopsy",
+      "description": "Jeri - Investigate and diagnose a JeriCommerce program's lifecycle, health, or churn by querying Metabase, BetterStack, and PostHog. Includes churn recovery outreach.",
+      "version": "202604.08.0",
+      "author": {
+        "name": "JeriCommerce"
+      },
+      "keywords": [
+        "jericommerce",
+        "program",
+        "autopsy",
+        "churn",
+        "diagnosis",
+        "metabase",
+        "betterstack",
+        "posthog"
+      ],
+      "category": "analytics"
     }
   ]
 }

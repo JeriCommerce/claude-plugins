@@ -28,6 +28,7 @@ Then install individual plugins:
 | [niche-research](./plugins/niche-research/) | Jeri - Generate pSEO niche research reports from Ahrefs data, ready to copy into the JeriCommerce blog repo | 202603.12.0 |
 | [optimize-skills](./plugins/optimize-skills/) | Audit and restructure Claude Code skills into modular folder structures for better consistency and maintainability | 202603.21.0 |
 | [communication](./plugins/communication/) | Jeri - On-brand content creation: marketing copy, cold emails, social posts, VoC research. EN/ES/IT | 202603.30.0 |
+| [program-autopsy](./plugins/program-autopsy/) | Jeri - Investigate and diagnose a JeriCommerce program's lifecycle, health, or churn by querying Metabase, BetterStack, and PostHog. Includes churn recovery outreach | 202604.08.0 |
 
 ## Updating
 
