@@ -8,7 +8,7 @@ description: >
   email de recuperacion", "reach out to the merchant", "win them back", "recovery
   email", "follow up after churn", "contactar al merchant", "mandar mensaje",
   or any reference to contacting a merchant after investigating their program.
-version: 202604.08.0
+version: 202610.30.0
 ---
 
 # Churn Recovery

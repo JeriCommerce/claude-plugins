@@ -11,16 +11,16 @@ description: >
   "que hizo este programa", "por que se desinstalo", "investiga el slug",
   "program health check", "churn analysis", "autopsia", "que paso con", or any
   reference to investigating a specific program by slug or shop domain.
-version: 202604.08.0
+version: 202610.30.0
 ---
 
 # Program Autopsy
 
-Systematic investigation of a JeriCommerce program's lifecycle using three data sources: Metabase (DB state), BetterStack (backend logs/errors), and PostHog (merchant admin behavior).
+Systematic investigation of a JeriCommerce program's lifecycle using three data sources: the production database (DB state), BetterStack (backend logs/errors), and PostHog (merchant admin behavior).
 
 ## Required Tools
 
-- `Metabase:execute` — SQL queries against production DB (database_id: 3)
+- `mcp__production-db__query` — SQL queries against the production DB (`sql` parameter). It comes from the `production-db` server in the api repo's `.mcp.json`, so it only loads in a session running in that repo
 - `mcp__claude_ai_BetterStack__telemetry_query` — Backend logs and error queries
 - `mcp__claude_ai_PostHog__query-run` — HogQL queries for merchant behavior
 - `visualize:show_widget` — Render the final HTML autopsy report
@@ -38,7 +38,7 @@ The user provides one of:
 
 Execute all data source queries, then synthesize. Do NOT ask the user for clarification before running queries — start investigating immediately with whatever identifier is provided.
 
-### Phase 1: BetterStack + Metabase (parallel)
+### Phase 1: BetterStack + Database (parallel)
 
 Run these two data sources in parallel — neither depends on the other.
 
@@ -46,9 +46,9 @@ Run these two data sources in parallel — neither depends on the other.
 
 Read `${CLAUDE_PLUGIN_ROOT}/skills/program-autopsy/references/betterstack-queries.md` for query templates and log signal patterns. Run the listed queries and extract install/uninstall timestamps, shop domain, and errors.
 
-**Metabase — Database State**
+**Database State**
 
-Read `${CLAUDE_PLUGIN_ROOT}/skills/program-autopsy/references/metabase-queries.md` for all SQL queries. Run queries 1-6. If the program was deleted (uninstall deletes the row), queries may return empty — that's a signal in itself.
+Read `${CLAUDE_PLUGIN_ROOT}/skills/program-autopsy/references/database-queries.md` for all SQL queries. Run queries 1-6. If the program was deleted (uninstall deletes the row), queries may return empty — that's a signal in itself.
 
 ### Phase 2: PostHog — Merchant Admin Behavior
 
@@ -89,6 +89,6 @@ Adjust `date_from` based on the timeline established from BetterStack in Phase 1
 ## Reference Files
 
 - `references/betterstack-queries.md` — BetterStack query templates and log signal patterns
-- `references/metabase-queries.md` — Metabase SQL queries for all DB entities
+- `references/database-queries.md` — SQL queries for all DB entities
 - `references/posthog-queries.md` — PostHog HogQL queries and event mappings
 - `references/widget-template.md` — HTML widget template and design system specs
