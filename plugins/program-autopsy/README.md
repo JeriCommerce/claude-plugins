@@ -1,10 +1,10 @@
 # Program Autopsy
 
-Systematic investigation of a JeriCommerce program's lifecycle, health, or churn. Queries three data sources — Metabase, BetterStack, and PostHog — to build a complete picture of what a merchant did, what went wrong, and why they may have churned. Then helps you reach out to recover them.
+Systematic investigation of a JeriCommerce program's lifecycle, health, or churn. Queries three data sources — the production database, BetterStack, and PostHog — to build a complete picture of what a merchant did, what went wrong, and why they may have churned. Then helps you reach out to recover them.
 
 ## Prerequisites
 
-- **Metabase connector** enabled in Settings > Extensions
+- **`production-db` MCP server** from the api repo's `.mcp.json` (run the skill in a session in that repo)
 - **BetterStack** MCP server connected
 - **PostHog** MCP server connected
 - **Visualize** extension for rendering the HTML report widget

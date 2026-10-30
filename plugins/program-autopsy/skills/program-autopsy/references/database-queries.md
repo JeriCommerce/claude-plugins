@@ -1,6 +1,6 @@
-# Metabase SQL Queries
+# Database SQL Queries
 
-All queries run against **database_id: 3** (production) via `Metabase:execute`.
+All queries run against production via `mcp__production-db__query`.
 
 ## 1. Program basics
 

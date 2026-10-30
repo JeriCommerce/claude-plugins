@@ -10,8 +10,8 @@ Before rendering, aggregate raw data into these variables:
 
 - `shopName`: from PostHog URLs or BetterStack brand extraction logs
 - `sessionMinutes`: diff between install and uninstall timestamps
-- `customerCount`: from Metabase, or "N/A" if deleted
-- `planType`: from Metabase subscriptions, or "Free"
+- `customerCount`: from the database, or "N/A" if deleted
+- `planType`: from the database's subscriptions, or "Free"
 - `timelineSteps[]`: array of `{time, description, color}` from PostHog events
 - `configuredItems[]`: array of `{name, status: configured|visited|untouched, detail}`
 - `churnSignals[]`: array of `{name, evidence, confidence: high|medium|low}`
@@ -27,8 +27,8 @@ Before rendering, aggregate raw data into these variables:
 |------|-------|--------|
 | Shop | Domain name (without `.myshopify.com`) | BetterStack / PostHog URL params |
 | Session | Duration in minutes (e.g. "31 min") | Install to uninstall timestamps |
-| Customers | Count, or "DB deleted" if program gone | Metabase |
-| Plan | Plan type or "Free" | Metabase |
+| Customers | Count, or "DB deleted" if program gone | Database |
+| Plan | Plan type or "Free" | Database |
 
 Each card: 13px muted label on top, 20px/500 value below. If deleted, show "Deleted" in `color: var(--color-text-danger)`.
 
@@ -77,5 +77,5 @@ Single block with `border-left: 4px solid var(--color-border-info)`:
 
 Use playful loading messages in Spanish:
 ```
-["Interrogando a Metabase", "Rastreando huellas en BetterStack", "Leyendo el diario del merchant", "Redactando el veredicto"]
+["Interrogando a la base de datos", "Rastreando huellas en BetterStack", "Leyendo el diario del merchant", "Redactando el veredicto"]
 ```
